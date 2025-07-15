@@ -640,3 +640,209 @@
 .artwork-card:hover .artwork-image {
     cursor: pointer;
 } 
+
+.academic-share-box {
+  background-color: #223b66;
+  padding: 40px 60px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+  border: 1px solid #1f3b69;
+}
+.academic-share-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+.academic-share-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccccdd;
+  margin-bottom: 24px;
+}
+.academic-share-partners a {
+  display: block;
+  font-size: 16px;
+  color: #c4d4ff;
+  margin: 6px 0;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.academic-share-partners a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+} 
+
+.art-info-box {
+  background-color: #223b66;
+  padding: 40px 60px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+  border: 1px solid #1f3b69;
+}
+.art-info-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+.art-info-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccccdd;
+  margin-bottom: 24px;
+}
+.art-info-partners a {
+  display: block;
+  font-size: 16px;
+  color: #c4d4ff;
+  margin: 6px 0;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.art-info-partners a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+} 
+
+.academic-info-section {
+  background: linear-gradient(to bottom, #1f3b69, #14294d);
+  padding: 40px 0 60px 0;
+}
+.academic-info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+.academic-info-box {
+  background-color: #263e74;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  width: 500px;
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+.academic-info-box:hover {
+  transform: translateY(-4px);
+}
+.academic-info-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+.academic-info-desc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #d0d6ea;
+  margin-bottom: 20px;
+}
+.academic-info-list a {
+  display: block;
+  font-size: 16px;
+  color: #6fa3ef;
+  margin: 6px 0;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.academic-info-list a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .academic-info-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .academic-info-box {
+    width: 100%;
+    min-width: 0;
+  }
+} 
+
+body {
+  background-color: #1f3b69;
+  background-image: url('https://cdn.jsdelivr.net/gh/ChalkPE/heropatterns-patterns/svg/cloudy.svg');
+  background-repeat: repeat;
+  background-size: auto 140px;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  color: #ffffff;
+}
+
+.hero {
+  background: rgba(15, 28, 52, 0.6);
+  padding: 80px 40px;
+  border-radius: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeUp 0.8s ease-out forwards;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+.hero h1 {
+  font-size: 48px;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 2;
+  color: #ccd6ee;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+.cta-button {
+  font-size: 16px;
+  padding: 12px 28px;
+  background: linear-gradient(to right, #5b8aff, #2f63d9);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.cta-button:hover {
+  background: linear-gradient(to right, #6f9eff, #3a6df2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 36px;
+  }
+  .hero p {
+    font-size: 16px;
+  }
+  .hero {
+    padding: 40px 10px;
+  }
+} 

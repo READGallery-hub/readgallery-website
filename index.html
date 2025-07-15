@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- 导航栏 -->
@@ -32,20 +33,9 @@
 
     <!-- 英雄区域 -->
     <section id="home" class="hero">
-        <div class="hero-background">
-            <svg class="hero-pattern" viewBox="0 0 1200 800" preserveAspectRatio="none">
-                <defs>
-                    <pattern id="mountains" patternUnits="userSpaceOnUse" width="200" height="100">
-                        <path d="M0,100 Q50,20 100,60 Q150,10 200,80 L200,100 Z" 
-                              fill="var(--song-mist)" opacity="0.3"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#mountains)"/>
-            </svg>
-        </div>
         <div class="hero-content">
-            <h1 class="hero-title">讀畫樓</h1>
-            <p class="hero-subtitle">讀畫樓是個崇尚中國文人精神和生活情趣的地方</p>
+            <h1>讀畫樓</h1>
+            <p>讀畫樓是個崇尚<br>中國文人精神和生活情趣的地方</p>
             <button class="cta-button">探索藏品</button>
         </div>
     </section>
@@ -97,37 +87,34 @@
     </section>
 
     <!-- 特色功能 -->
-    <section id="features" class="section features-section">
-        <div class="container">
-            <div class="section-header scroll-reveal">
-                <h2 class="section-title">特色功能</h2>
-                <div class="title-decoration"></div>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card scroll-reveal">
-                    <h3 class="feature-title">学术研究</h3>
-                    <p class="feature-description">
-                        专业考古团队与权威机构合作，深入解读每件藏品的历史与艺术。<br>
-                        <a href="https://www.dha.ac.cn/" target="_blank">敦煌研究院</a><br>
-                        <a href="https://www.dpm.org.cn/" target="_blank">北京故宫博物院</a><br>
-                        <a href="https://www.npm.gov.tw/" target="_blank">台北故宫博物院</a>
-                    </p>
-                </div>
-                <div class="feature-card scroll-reveal">
-                    <h3 class="feature-title">艺术品资讯</h3>
-                    <p class="feature-description">
-                        关注全球艺术品市场动态，获取一手资讯：<br>
-                        <a href="https://www.sothebys.com/zh" target="_blank">苏富比</a><br>
-                        <a href="https://www.christies.com/zh" target="_blank">佳士得</a><br>
-                        <a href="https://www.polypm.com.cn/" target="_blank">保利拍卖</a>
-                    </p>
-                </div>
-                <div class="feature-card scroll-reveal">
-                    <h3 class="feature-title">文化教育</h3>
-                    <p class="feature-description">对特定研究内容，制定文旅、学术研学项目。</p>
-                </div>
-            </div>
+    <!-- <section id="features" class="section features-section"> ... </section> -->
+
+    <!-- 学术与资讯模块美化区块 -->
+    <section class="academic-info-section">
+      <div class="academic-info-container">
+        <div class="academic-info-box">
+          <div class="academic-info-title">学术分享</div>
+          <div class="academic-info-desc">
+            专业考古团队与权威机构合作，深入解读每件藏品的历史与艺术。
+          </div>
+          <div class="academic-info-list">
+            <a href="https://www.dha.ac.cn/" target="_blank">▸ 敦煌研究院</a>
+            <a href="https://www.dpm.org.cn/" target="_blank">▸ 北京故宫博物院</a>
+            <a href="https://www.npm.gov.tw/" target="_blank">▸ 台北故宫博物院</a>
+          </div>
         </div>
+        <div class="academic-info-box">
+          <div class="academic-info-title">艺术品资讯</div>
+          <div class="academic-info-desc">
+            关注全球艺术品市场动态，获取一手资讯：
+          </div>
+          <div class="academic-info-list">
+            <a href="https://www.sothebys.com/zh" target="_blank">▸ 苏富比</a>
+            <a href="https://www.christies.com/zh" target="_blank">▸ 佳士得</a>
+            <a href="https://www.polypm.com.cn/" target="_blank">▸ 保利拍卖</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 联系我们 -->

@@ -1,0 +1,64 @@
+/* J.J. Lally 深蓝展览页风格色调系统 */
+:root {
+    --gallery-bg-gradient: linear-gradient(to bottom, #1F3B69 0%, #1F3B69 100%);
+    --gallery-navy-dark: #1F3B69;      /* 顶部深蓝 */
+    --gallery-navy-mid:  #1F3B69;      /* 中部深蓝 */
+    --gallery-navy:      #1F3B69;      /* 藏青蓝 */
+    --gallery-navy-light:#1F3B69;      /* 较亮蓝灰 */
+    --gallery-text:      #f8f8ff;      /* 亮白文字 */
+    --gallery-secondary: #b0b8d1;      /* 淡蓝灰文字 */
+    --gallery-link:      #4a90e2;      /* 亮蓝高亮 */
+    --gallery-link-hover: #7ab6ff;     /* 高亮hover */
+    --gallery-card:      transparent;  /* 卡片背景透明 */
+    --gallery-shadow:    none;
+    --gallery-border:    #22304a;      /* 深蓝边框 */
+
+    /* 字體系統 */
+    --font-primary: Georgia, 宋體, SimSun, serif;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+
+    /* 間距系統 */
+    --spacing-xs: 10px;
+    --spacing-sm: 20px;
+    --spacing-md: 30px;
+    --spacing-lg: 40px;
+    --spacing-xl: 60px;
+    --spacing-xxl: 80px;
+    --spacing-xxxl: 100px;
+
+    /* 布局系統 */
+    --container-max-width: 1200px;
+    --container-padding-desktop: 30px;
+    --container-padding-mobile: 20px;
+
+    /* 動畫時長 */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+
+    /* 陰影系統 */
+    --shadow-light: none;
+    --shadow-medium: none;
+    --shadow-heavy: none;
+
+    /* 邊框圓角 */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    /* 漸變背景 */
+    --gradient-primary: var(--gallery-bg-gradient);
+    --gradient-hero: var(--gallery-bg-gradient);
+    --gradient-button: linear-gradient(45deg, #1F3B69, #4a90e2);
+    --gradient-button-hover: linear-gradient(45deg, #4a90e2, #1F3B69);
+
+    /* 宋代颜色变量 - 深蓝展览页适配 */
+    --song-paper: #f8f8ff;
+    --song-ink: #b0b8d1;
+    --song-tea: #b0b8d1;
+    --song-jade: #22304a;
+    --song-mist: #18203a;
+    --song-gold: #4a90e2;
+} 

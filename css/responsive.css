@@ -1,0 +1,363 @@
+/* 响应式设计 */
+
+/* 大屏幕 (1200px以上) */
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .section {
+        padding: var(--spacing-xxxl) 0;
+    }
+}
+
+/* 中等屏幕 (768px - 1199px) */
+@media (max-width: 1199px) {
+    .container {
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .about-content {
+        gap: var(--spacing-xl);
+    }
+    
+    .contact-content {
+        gap: var(--spacing-xl);
+    }
+}
+
+/* 平板设备 (768px - 1023px) */
+@media (max-width: 1023px) {
+    .hero-title {
+        font-size: 2.8rem;
+        letter-spacing: 6px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+    
+    .about-quote {
+        margin-top: var(--spacing-lg);
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+    
+    .contact-form {
+        order: -1;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+/* 移动设备 (768px以下) */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--container-padding-mobile);
+    }
+    
+    /* 导航栏移动端适配 */
+    .nav-container {
+        height: 60px;
+        padding: 0 var(--container-padding-mobile);
+    }
+    
+    .nav-links {
+        display: none; /* 移动端隐藏导航菜单，可扩展为汉堡菜单 */
+    }
+    
+    .nav-logo h2 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    /* 英雄区域移动端适配 */
+    .hero {
+        height: 100vh;
+        padding-top: 60px; /* 为固定导航栏留出空间 */
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .cta-button {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 1rem;
+    }
+    
+    /* 页面区域移动端适配 */
+    .section {
+        padding: var(--spacing-xxl) 0;
+    }
+    
+    .section-header {
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+    
+    /* 画廊介绍移动端适配 */
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .about-text p {
+        font-size: 0.95rem;
+        line-height: 2;
+    }
+    
+    .about-quote {
+        padding: var(--spacing-lg);
+    }
+    
+    .about-quote blockquote {
+        font-size: 1.1rem;
+    }
+    
+    /* 藏品展示移动端适配 */
+    .collection-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .artwork-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .artwork-image {
+        height: 200px;
+    }
+    
+    .artwork-info {
+        padding: var(--spacing-md);
+    }
+    
+    .artwork-title {
+        font-size: 1.2rem;
+    }
+    
+    /* 特色功能移动端适配 */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .feature-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+    
+    .feature-title {
+        font-size: 1.5rem;
+    }
+    
+    /* 联系我们移动端适配 */
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .contact-info h3,
+    .contact-form h3 {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: var(--spacing-sm);
+        font-size: 0.95rem;
+    }
+    
+    .submit-button {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.95rem;
+    }
+    
+    /* 页脚移动端适配 */
+    .footer {
+        padding: var(--spacing-xl) 0 var(--spacing-md);
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        text-align: center;
+    }
+    
+    .footer-logo h3 {
+        font-size: 1.5rem;
+    }
+    
+    .footer-links h4,
+    .footer-contact h4 {
+        font-size: 1.2rem;
+    }
+}
+
+/* 小屏幕手机 (480px以下) */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .hero-description {
+        font-size: 0.9rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .about-text p {
+        font-size: 0.9rem;
+    }
+    
+    .about-quote blockquote {
+        font-size: 1rem;
+    }
+    
+    .artwork-title {
+        font-size: 1.1rem;
+    }
+    
+    .feature-title {
+        font-size: 1.3rem;
+    }
+    
+    .contact-info h3,
+    .contact-form h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* 超小屏幕 (320px以下) */
+@media (max-width: 320px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .section {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+}
+
+/* 横屏模式适配 */
+@media (orientation: landscape) and (max-height: 500px) {
+    .hero {
+        height: 100vh;
+        padding-top: 60px;
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .hero-description {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* 高分辨率屏幕适配 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-pattern {
+        transform: scale(0.5);
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .navbar,
+    .cta-button,
+    .submit-button {
+        display: none;
+    }
+    
+    .hero {
+        height: auto;
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+} 

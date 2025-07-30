@@ -3,7 +3,12 @@
 /* 大屏幕 (1200px以上) */
 @media (min-width: 1200px) {
     .hero-title {
-        font-size: 4rem;
+        font-size: 64px;
+        letter-spacing: 4px;
+    }
+    
+    .hero-subtitle {
+        font-size: 20px;
     }
     
     .section {
@@ -18,7 +23,12 @@
     }
     
     .hero-title {
-        font-size: 3rem;
+        font-size: 56px;
+        letter-spacing: 4px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
     }
     
     .about-content {
@@ -33,12 +43,12 @@
 /* 平板设备 (768px - 1023px) */
 @media (max-width: 1023px) {
     .hero-title {
-        font-size: 2.8rem;
-        letter-spacing: 6px;
+        font-size: 48px;
+        letter-spacing: 3px;
     }
     
     .hero-subtitle {
-        font-size: 1.3rem;
+        font-size: 16px;
     }
     
     .section-title {
@@ -100,14 +110,14 @@
     }
     
     .hero-title {
-        font-size: 2.5rem;
-        letter-spacing: 4px;
+        font-size: 40px;
+        letter-spacing: 3px;
         margin-bottom: var(--spacing-sm);
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
-        letter-spacing: 2px;
+        font-size: 14px;
+        letter-spacing: 1px;
     }
     
     .hero-description {
@@ -241,12 +251,12 @@
 /* 小屏幕手机 (480px以下) */
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2rem;
-        letter-spacing: 3px;
+        font-size: 32px;
+        letter-spacing: 2px;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 12px;
         letter-spacing: 1px;
     }
     
@@ -288,7 +298,7 @@
     }
     
     .hero-title {
-        font-size: 1.8rem;
+        font-size: 28px;
         letter-spacing: 2px;
     }
     
@@ -317,13 +327,15 @@
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 36px;
         margin-bottom: var(--spacing-sm);
+        letter-spacing: 2px;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 14px;
         margin-bottom: var(--spacing-xs);
+        letter-spacing: 1px;
     }
     
     .hero-description {

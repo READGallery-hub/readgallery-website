@@ -14,10 +14,12 @@
     --gallery-border:    #22304a;      /* 深蓝边框 */
 
     /* 字體系統 */
-    --font-primary: Georgia, 宋體, SimSun, serif;
+    --font-primary: 'Noto Serif TC', '思源宋體', '华文中宋', Georgia, 宋體, SimSun, serif;
     --font-weight-light: 300;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --font-weight-heavy: 700;
 
     /* 間距系統 */
     --spacing-xs: 10px;

@@ -35,13 +35,17 @@
 
 .logo-text {
     font-size: 2rem;
-    font-family: Georgia, 宋体, SimSun, serif;
-    font-weight: 500;
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 4px;
     color: var(--song-gold);
     margin: 0;
     display: block;
     text-shadow: 1px 1px 4px rgba(31,59,105,0.10);
+    background: linear-gradient(45deg, #4a90e2, #7ab6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 @media (max-width: 768px) {
@@ -51,6 +55,17 @@
     }
     .logo-img {
         max-height: 40px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+        letter-spacing: 2px;
+    }
+    
+
+    
+    .hero-subtitle {
+        font-size: 18px;
     }
 }
 
@@ -89,28 +104,25 @@
 
 /* 英雄区域样式 */
 .hero {
-    height: 100vh;
     position: relative;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gradient-hero);
+    background: radial-gradient(circle at center, #0f1d3e 0%, #132e5b 100%);
     overflow: hidden;
 }
 
-.hero-background {
+.hero::before {
+    content: "";
+    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    opacity: 0.05;
     position: absolute;
-    top: 0;
+    top: 0; 
     left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
-
-.hero-pattern {
     width: 100%;
     height: 100%;
-    opacity: 0.6;
+    z-index: 1;
 }
 
 .hero-content {
@@ -122,17 +134,26 @@
     animation: fadeInUp 1.5s ease-out;
 }
 
+
+
 .hero-title {
-    color: var(--gallery-text);
-    margin-bottom: var(--spacing-md);
-    text-shadow: 2px 2px 4px rgba(44, 36, 22, 0.1);
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    color: white;
+    font-family: 'Noto Serif TC', serif;
+    line-height: 1.2;
+    text-align: center;
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--song-tea);
-    margin-bottom: var(--spacing-sm);
-    letter-spacing: 3px;
+    font-size: 20px;
+    color: #c8d6f1;
+    margin-bottom: 40px;
+    font-family: 'Noto Serif TC', serif;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .hero-description {
@@ -143,20 +164,20 @@
 }
 
 .cta-button {
-    background: var(--gradient-button);
-    color: var(--gallery-text);
-    padding: var(--spacing-md) var(--spacing-xl);
-    border-radius: var(--border-radius-md);
-    font-size: 1.1rem;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 2px;
-    box-shadow: none;
+    background: linear-gradient(to right, #3953b3, #5a80d8);
+    color: white;
     border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: background 0.3s ease;
+    font-family: 'Noto Serif TC', serif;
 }
 
 .cta-button:hover {
-    background: var(--gradient-button-hover);
-    color: var(--gallery-link-hover);
+    background: #5a80d8;
 }
 
 /* 页面区域通用样式 */
@@ -845,4 +866,24 @@ body {
   .hero {
     padding: 40px 10px;
   }
+} 
+
+a[href="#"] {
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(to right, #547dbf, #3e5f9c);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+a[href="#"]:hover {
+  color: #e53935;
+  background: linear-gradient(to right, #6f9eff, #547dbf);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
 } 

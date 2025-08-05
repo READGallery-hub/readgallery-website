@@ -173,7 +173,7 @@
 
 - **地址**: 杭州、香港、西雅图
 - **电话**: +1 (425) 381-3925
-- **邮箱**: chengmu2010@hotmail.com
+- **邮箱**: allison@read-gallery.com
 
 ---
 

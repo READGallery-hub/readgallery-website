@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调试页面</title>
+    <style>
+        body {
+            background: #1f3b69;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .test-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .test-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.1);
+        }
+        .test-title {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .test-desc {
+            color: #b0b8d1;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>调试页面</h1>
+    
+    <div class="test-section">
+        <h2>测试图片加载</h2>
+        <div class="test-grid">
+            <div class="test-card">
+                <img src="assets/images/chinese-dragon-calligraphy.JPG" alt="龙字书法">
+                <h3 class="test-title">龙字书法</h3>
+                <p class="test-desc">传统中国书法，龙字草书，笔法遒劲。</p>
+            </div>
+            <div class="test-card">
+                <img src="assets/images/chinese-horse-painting.JPG" alt="骏马图">
+                <h3 class="test-title">骏马图</h3>
+                <p class="test-desc">传统中国水墨画，骏马山水，笔法流畅。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试CSS文件</h2>
+        <p>如果这个页面能正常显示，说明CSS和图片都正常。</p>
+        <p>如果图片没有显示，可能是图片文件路径问题。</p>
+    </div>
+
+    <script>
+        console.log('调试页面加载完成');
+        
+        // 测试图片加载
+        const images = document.querySelectorAll('img');
+        images.forEach((img, index) => {
+            img.onload = function() {
+                console.log(`图片 ${index + 1} 加载成功:`, img.src);
+            };
+            img.onerror = function() {
+                console.log(`图片 ${index + 1} 加载失败:`, img.src);
+            };
+        });
+    </script>
+</body>
+</html> 

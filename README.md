@@ -112,6 +112,43 @@
 2. 使用本地服务器运行（推荐使用 Live Server）
 3. 在浏览器中打开 `index.html`
 
+### 代码提交与部署
+本项目使用 GitHub CLI 进行代码提交和部署：
+
+#### 安装 GitHub CLI
+```bash
+# macOS (使用 Homebrew)
+brew install gh
+
+# 其他系统请参考官方文档
+```
+
+#### 认证设置
+```bash
+# 登录 GitHub 账户
+gh auth login
+
+# 配置 Git 使用 GitHub CLI 认证
+gh auth setup-git
+```
+
+#### 提交和推送代码
+```bash
+# 添加修改的文件
+git add .
+
+# 提交更改
+git commit -m "描述你的更改"
+
+# 推送到 GitHub
+git push origin main
+```
+
+#### 自动部署
+- 代码推送到 `main` 分支后，GitHub Pages 会自动构建和部署
+- 部署状态可在 GitHub Actions 页面查看
+- 通常 2-10 分钟内完成部署
+
 ### 浏览器兼容性
 - **现代浏览器**: Chrome 70+, Firefox 65+, Safari 12+
 - **CSS Grid**: 主要布局方式

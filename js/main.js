@@ -80,11 +80,11 @@ const artworks = [
     },
     {
         title: "chizhouyao jar.JPG",
-        image: "assets/images/chizhouyao jar.JPG?v=" + Date.now()
+        image: "assets/images/chizhouyao-jar-new.JPG"
     },
     {
         title: "cizhouyao-wrist-pillow.JPG",
-        image: "assets/images/cizhouyao-wrist-pillow.JPG?v=" + Date.now()
+        image: "assets/images/cizhouyao-wrist-pillow-new.JPG"
     },
     {
         title: "cow head miseci.JPG",

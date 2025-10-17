@@ -84,7 +84,7 @@ const artworks = [
     },
     {
         title: "cizhouyao-wrist-pillow.JPG",
-        image: "assets/images/cizhouyao-wrist-pillow.JPG"
+        image: "assets/images/cizhouyao-wrist-pillow.JPG?v=202410170130"
     },
     {
         title: "cow head miseci.JPG",

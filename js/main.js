@@ -80,7 +80,7 @@ const artworks = [
     },
     {
         title: "chizhouyao jar.JPG",
-        image: "assets/images/chizhouyao jar.JPG"
+        image: "assets/images/chizhouyao jar.JPG?v=202410170130"
     },
     {
         title: "cizhouyao-wrist-pillow.JPG",

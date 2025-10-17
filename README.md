@@ -1,5 +1,8 @@
 # 读画楼 - 东方美韵艺术画廊
 
+🌐 **Live Website**: [http://www.read-gallery.com/](http://www.read-gallery.com/)  
+📁 **GitHub Repository**: [https://github.com/READGallery-hub/readgallery-website](https://github.com/READGallery-hub/readgallery-website)
+
 ## 🎯 项目概述
 
 **读画楼**是一座展现文化底蕴、深层精神追求的东方美韵艺术画廊网站。通过宋代美学色调、传统文化元素和现代交互技术的结合，为用户提供沉浸式的文化体验。

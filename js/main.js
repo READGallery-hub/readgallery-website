@@ -13,12 +13,12 @@ const artworks = [
         image: "assets/images/song-white-jar.JPG"
     },
     {
-        title: "《新石器时代彩陶罐》",
+        title: "【马家窑彩陶漩涡纹双耳瓶】",
         period: "新石器时代",
         material: "彩陶",
         size: "高32cm 口径18cm",
-        description: "此罐为新石器时代彩陶器，器型饱满，肩部绘有旋涡纹与带状纹饰，色彩对比鲜明，展现了史前先民的艺术创造力。",
-        brief: "史前彩陶，旋涡纹饰，造型饱满。",
+        description: "直颈，唇口、平底，颈腹有两只扁平竖耳，繪有黑彩璇涡纹，线条流畅，似水奔流不息。",
+        brief: "马家窑彩陶，漩涡纹饰，双耳造型。",
         icon: "🏺",
         image: "assets/images/neolithic-pot.JPG"
     },

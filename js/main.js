@@ -3,12 +3,12 @@
 // 藏品数据
 const artworks = [
     {
-        title: "《宋代白釉罐》",
+        title: "【宋代白釉瓶】",
         period: "宋代",
         material: "白釉刻花",
         size: "高28cm 口径12cm",
-        description: "此罐为宋代白釉刻花瓷器，釉色温润，胎体坚致，罐身刻划花卉纹饰，线条流畅自然，体现了宋代瓷器工艺的高超水平，是宋瓷中的经典代表。",
-        brief: "宋代白釉刻花瓷器，温润典雅，花卉纹饰流畅自然。",
+        description: "存世稀有的北宋白釉瓶，出自中国山西忻州，采用高浮雕工刻划牡丹纹，气象浑朴。",
+        brief: "北宋白釉瓶，高浮雕牡丹纹，气象浑朴。",
         icon: "🏺",
         image: "assets/images/song-white-jar.JPG"
     },

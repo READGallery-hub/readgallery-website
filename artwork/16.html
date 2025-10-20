@@ -18,6 +18,58 @@
         .artwork-detail-nav a { color: var(--song-jade); font-size: 1.1rem; padding: 10px 24px; border-radius: 6px; background: var(--gradient-button); box-shadow: 0 2px 8px rgba(44,36,22,0.08); transition: background 0.3s, color 0.3s; }
         .artwork-detail-nav a:hover { background: var(--gradient-button-hover); color: var(--song-paper); }
         .artwork-detail-back { display: inline-block; margin-bottom: 24px; color: var(--song-tea); font-size: 1rem; text-decoration: underline; cursor: pointer; }
+        .artwork-detail-img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .artwork-detail-img:hover {
+            transform: scale(1.02);
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        .image-modal-content {
+            width: auto;
+            height: auto;
+            min-width: 400px;
+            min-height: 400px;
+            max-width: 95vw;
+            max-height: 95vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .image-modal-close:hover {
+            color: #ccc;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body style="background: var(--song-paper);">
@@ -39,7 +91,7 @@
     </nav>
     <div class="artwork-detail-container">
         <a class="artwork-detail-back" href="../collection.html">← Back to Collection</a>
-        <img class="artwork-detail-img" src="../assets/images/Gilded bronze plum blossom belt hook.JPG" alt="Gilded bronze plum blossom belt hook">
+        <img class="artwork-detail-img" onclick="openImageModal(this.src, this.alt)" src="../assets/images/Gilded bronze plum blossom belt hook.JPG" alt="Gilded bronze plum blossom belt hook">
         <div class="artwork-detail-title">Gilded bronze plum blossom belt hook</div>
         <div class="artwork-detail-meta">—</div>
         <div class="artwork-detail-desc">
@@ -50,5 +102,12 @@
             <a href="17.html">Next →</a>
         </div>
     </div>
+    <!-- 图片模态框 -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close" onclick="closeImageModal()"></body>×</span>
+        <img class="image-modal-content" id="modalImage">
+    </div>
+
+    <script src="../js/image-modal.js"></script>
 </body>
 </html> 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
     <title>讀畫樓 - 东方美韵艺术画廊</title>
     <meta name="description" content="展现文化底蕴、深层精神追求，跨越历史长河展示东方美韵的藝術畫廊">
     <link rel="stylesheet" href="css/reset.css">
@@ -135,16 +136,16 @@
                     <h3>预约参观</h3>
                     <form class="form">
                         <div class="form-group">
-                            <input type="text" placeholder="您的姓名" required>
+                            <input type="text" id="visitor-name" name="visitor-name" placeholder="您的姓名" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="邮箱地址" required>
+                            <input type="email" id="visitor-email" name="visitor-email" placeholder="邮箱地址" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" placeholder="联系电话" required>
+                            <input type="tel" id="visitor-phone" name="visitor-phone" placeholder="联系电话" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="留言内容" rows="4"></textarea>
+                            <textarea id="visitor-message" name="visitor-message" placeholder="留言内容" rows="4"></textarea>
                         </div>
                         <button type="submit" class="submit-button">提交预约</button>
                     </form>

@@ -100,6 +100,31 @@
 - 导航栏 logo 颜色尝试金色、手写体图片，最终恢复为原有文字logo
 - 项目已成功推送至 GitHub 并通过 GitHub Pages 发布上线
 
+## 2025-01-17
+
+### 稳定版本标记 - 当前最稳定功能可用版本
+
+**版本信息**：
+- Commit: `18a6126` - "Optimize CSP policy for better security and compatibility"
+- 日期: 2025-01-17
+- 状态: 最稳定功能可用版本
+
+**版本特点**：
+- 所有藏品功能完全正常
+- 藏品卡片点击跳转功能正常
+- 图片模态框功能正常
+- 导航和页面跳转功能正常
+- CSP策略包含unsafe-inline和unsafe-eval，确保兼容性
+- 所有onclick事件处理器正常工作
+
+**技术配置**：
+- CSP策略: `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';`
+- 文件结构: 保持原始简洁结构
+- 脚本文件: animations.js, image-modal.js, main.js
+
+**备注**：
+此版本经过测试验证，所有核心功能均正常工作。如需进行安全级别提升或其他重大改动，建议基于此版本进行，并充分测试功能完整性。
+
 ---
 
 > 每次继续本项目时，请先查阅本 work-log.md，了解已完成内容和设计思路。

@@ -58,9 +58,9 @@
 
     /* 宋代颜色变量 - 深蓝展览页适配 */
     --song-paper: #f8f8ff;
-    --song-ink: #b0b8d1;
-    --song-tea: #b0b8d1;
+    --song-ink: #2c3e50;        /* 正文文字颜色 - 深灰蓝 */
+    --song-tea: #2c3e50;        /* 元数据文字颜色 - 深灰蓝 */
     --song-jade: #22304a;
     --song-mist: #18203a;
-    --song-gold: #4a90e2;
+    
 } 

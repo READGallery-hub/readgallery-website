@@ -101,6 +101,18 @@
             letter-spacing: 3px;
             font-weight: 500;
         }
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #8899bb;
+        }
+        .chat-status .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #4caf50;
+        }
         .chat-header a {
             color: #8899bb;
             font-size: 0.85rem;
@@ -126,6 +138,8 @@
             font-size: 0.98rem;
             line-height: 1.8;
             animation: msgIn 0.3s ease;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
         .msg.bot {
             align-self: flex-start;
@@ -139,13 +153,35 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-bottom-right-radius: 4px;
         }
-        .msg .coming-soon {
+        .msg .time {
             display: block;
-            margin-top: 8px;
-            font-size: 0.82rem;
-            color: #8899bb;
-            font-style: italic;
+            font-size: 0.72rem;
+            color: #667799;
+            margin-top: 6px;
         }
+
+        /* Typing indicator */
+        .typing-indicator {
+            align-self: flex-start;
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.15);
+            border-bottom-left-radius: 4px;
+            display: none;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #4a90e2;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out;
+            opacity: 0.4;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
         .chat-input-area {
             padding: 16px 20px;
@@ -180,14 +216,29 @@
             white-space: nowrap;
         }
         .chat-send:hover { background: linear-gradient(to right, #4a63c3, #6a90e8); }
+        .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .notice {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #556688;
+            padding: 4px;
+        }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
 
         @media (max-width: 640px) {
             body { padding: 10px; }
-            #chat-screen { height: 90vh; border-radius: 12px; }
+            #chat-screen { height: 92vh; border-radius: 12px; }
             .msg { max-width: 88%; }
+            .chat-header { padding: 14px 16px; }
+            .chat-messages { padding: 16px; }
+            .chat-input-area { padding: 12px; }
         }
     </style>
 </head>
@@ -204,74 +255,191 @@
     <!-- Chat Screen -->
     <div id="chat-screen">
         <div class="chat-header">
-            <h2>讀畫樓助手</h2>
+            <div>
+                <h2>讀畫樓助手</h2>
+                <div class="chat-status"><span class="dot"></span> 在线</div>
+            </div>
             <a href="index.html">← 返回首页</a>
         </div>
         <div class="chat-messages" id="chat-messages">
-            <div class="msg bot">
-                欢迎来到讀畫樓助手！🏛️
-                <span class="coming-soon">聊天功能即将上线，敬请期待。</span>
+            <!-- Messages loaded from server -->
+            <div class="typing-indicator" id="typing">
+                <span></span><span></span><span></span>
             </div>
         </div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" class="chat-input" placeholder="输入消息..." disabled>
             <button class="chat-send" id="chat-send" onclick="sendMessage()" disabled>发送</button>
         </div>
+        <div class="notice">回复可能需要1-2分钟，请耐心等待 🙏</div>
     </div>
 
     <script>
-    var PASSWORD = 'readgallery2026';
+    (function() {
+        var PASSWORD = 'readgallery2026';
+        var API_BASE = 'https://chat-worker.chengmu2010.workers.dev/api';
+        var pollTimer = null;
+        var lastTs = 0;
+        var waitingForReply = false;
 
-    function checkPassword() {
-        var input = document.getElementById('pw-input');
-        if (input.value === PASSWORD) {
+        // Check if already authenticated this session
+        if (sessionStorage.getItem('chat_auth') === PASSWORD) {
+            enterChat();
+        }
+
+        window.checkPassword = function() {
+            var input = document.getElementById('pw-input');
+            if (input.value === PASSWORD) {
+                sessionStorage.setItem('chat_auth', PASSWORD);
+                enterChat();
+            } else {
+                document.getElementById('pw-error').textContent = '密码错误，请重试';
+                input.value = '';
+                input.focus();
+            }
+        };
+
+        document.getElementById('pw-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') window.checkPassword();
+        });
+
+        function enterChat() {
             document.getElementById('password-screen').style.display = 'none';
             var chat = document.getElementById('chat-screen');
             chat.style.display = 'flex';
-            // Enable input for mockup interaction
             document.getElementById('chat-input').disabled = false;
             document.getElementById('chat-send').disabled = false;
             document.getElementById('chat-input').focus();
-        } else {
-            document.getElementById('pw-error').textContent = '密码错误，请重试';
-            input.value = '';
-            input.focus();
+
+            // Load history then start polling
+            loadMessages();
+            pollTimer = setInterval(pollMessages, 3000);
         }
-    }
 
-    document.getElementById('pw-input').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') checkPassword();
-    });
+        function apiHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'X-Chat-Auth': PASSWORD
+            };
+        }
 
-    function sendMessage() {
-        var input = document.getElementById('chat-input');
-        var text = input.value.trim();
-        if (!text) return;
+        function formatTime(ts) {
+            var d = new Date(ts);
+            var h = d.getHours().toString().padStart(2, '0');
+            var m = d.getMinutes().toString().padStart(2, '0');
+            return h + ':' + m;
+        }
 
-        var messages = document.getElementById('chat-messages');
+        function addMessage(role, text, ts) {
+            var container = document.getElementById('chat-messages');
+            var typing = document.getElementById('typing');
+            var div = document.createElement('div');
+            div.className = 'msg ' + role;
+            div.textContent = text;
+            if (ts) {
+                var timeSpan = document.createElement('span');
+                timeSpan.className = 'time';
+                timeSpan.textContent = formatTime(ts);
+                div.appendChild(timeSpan);
+            }
+            container.insertBefore(div, typing);
+            container.scrollTop = container.scrollHeight;
+        }
 
-        // Add user message
-        var userMsg = document.createElement('div');
-        userMsg.className = 'msg user';
-        userMsg.textContent = text;
-        messages.appendChild(userMsg);
+        function showTyping(show) {
+            var el = document.getElementById('typing');
+            el.style.display = show ? 'block' : 'none';
+            if (show) {
+                var container = document.getElementById('chat-messages');
+                container.scrollTop = container.scrollHeight;
+            }
+        }
 
-        input.value = '';
-        messages.scrollTop = messages.scrollHeight;
+        function loadMessages() {
+            fetch(API_BASE + '/chat?since=0', { headers: apiHeaders() })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.messages && data.messages.length) {
+                        data.messages.forEach(function(m) {
+                            addMessage(m.role === 'user' ? 'user' : 'bot', m.text, m.ts);
+                            if (m.ts > lastTs) lastTs = m.ts;
+                        });
+                        // Check if last user msg is unprocessed
+                        var last = data.messages[data.messages.length - 1];
+                        if (last.role === 'user' && last.processed === false) {
+                            waitingForReply = true;
+                            showTyping(true);
+                        }
+                    } else {
+                        // Welcome message if empty
+                        addMessage('bot', '欢迎来到讀畫樓！🏛️\n\n我是讀畫樓助手，有什么可以帮您的吗？', Date.now());
+                    }
+                })
+                .catch(function(err) {
+                    addMessage('bot', '连接服务器失败，请稍后刷新页面重试。', Date.now());
+                });
+        }
 
-        // Bot reply (static mockup)
-        setTimeout(function() {
-            var botMsg = document.createElement('div');
-            botMsg.className = 'msg bot';
-            botMsg.innerHTML = '感谢您的消息！讀畫樓智能助手正在开发中，即将上线。<span class="coming-soon">如需咨询，请发邮件至 allison@read-gallery.com</span>';
-            messages.appendChild(botMsg);
-            messages.scrollTop = messages.scrollHeight;
-        }, 800);
-    }
+        function pollMessages() {
+            fetch(API_BASE + '/chat?since=' + lastTs, { headers: apiHeaders() })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.messages && data.messages.length) {
+                        data.messages.forEach(function(m) {
+                            addMessage(m.role === 'user' ? 'user' : 'bot', m.text, m.ts);
+                            if (m.ts > lastTs) lastTs = m.ts;
+                            if (m.role === 'bot') {
+                                waitingForReply = false;
+                                showTyping(false);
+                            }
+                        });
+                    }
+                })
+                .catch(function() { /* silent retry */ });
+        }
 
-    document.getElementById('chat-input').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') sendMessage();
-    });
+        window.sendMessage = function() {
+            var input = document.getElementById('chat-input');
+            var text = input.value.trim();
+            if (!text) return;
+
+            var btn = document.getElementById('chat-send');
+            btn.disabled = true;
+            input.value = '';
+
+            fetch(API_BASE + '/chat', {
+                method: 'POST',
+                headers: apiHeaders(),
+                body: JSON.stringify({ text: text })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.ok) {
+                    addMessage('user', text, data.message.ts);
+                    lastTs = data.message.ts;
+                    waitingForReply = true;
+                    showTyping(true);
+                } else if (data.error === 'rate_limited') {
+                    addMessage('bot', '⚠️ 发送太频繁了，请稍等一会儿再试。', Date.now());
+                } else {
+                    addMessage('bot', '⚠️ 发送失败，请重试。', Date.now());
+                }
+                btn.disabled = false;
+                input.focus();
+            })
+            .catch(function() {
+                addMessage('bot', '⚠️ 网络错误，请检查网络后重试。', Date.now());
+                btn.disabled = false;
+            });
+        };
+
+        document.getElementById('chat-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                window.sendMessage();
+            }
+        });
+    })();
     </script>
 </body>
 </html>

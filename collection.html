@@ -18,7 +18,10 @@
             <div class="nav-logo">
                 <a href="index.html#home" class="logo-text">讀畫樓</a>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
                 <li><a href="index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
                 <li><a href="index.html#collection" class="nav-link i18n" data-zh="藏品分类" data-en="Collection">藏品分类</a></li>
@@ -62,7 +65,14 @@
         </div>
     </footer>
     <script src="js/animations.js"></script>
-    <script src="js/main.js?v=202503150300"></script>
+    <script src="js/main.js?v=202503150400"></script>
     <script src="js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn=document.getElementById('hamburger'),nav=document.getElementById('nav-links');
+        if(btn&&nav){btn.addEventListener('click',function(){var o=nav.classList.toggle('open');btn.classList.toggle('active');btn.setAttribute('aria-expanded',o);});
+        nav.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){nav.classList.remove('open');btn.classList.remove('active');});});}
+    })();
+    </script>
 </body>
 </html>

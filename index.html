@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';">
-    <title>讀畫樓 - 东方美韵艺术画廊</title>
-    <meta name="description" content="展现文化底蕴、深层精神追求，跨越历史长河展示东方美韵的藝術畫廊">
+    <title>讀畫樓 - 杭州讀畫樓私人收藏</title>
+    <meta name="description" content="杭州讀畫樓——崇尚中國文人精神和生活情趣，收藏跨越新石器時代至清代的中國古代藝術精品。">
+    <meta name="description" lang="en" content="Hangzhou Read Gallery — A private collection devoted to the spirit of Chinese literati culture, spanning Neolithic to Qing dynasty art.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="讀畫樓 — Hangzhou Read Gallery">
+    <meta property="og:description" content="A private collection of Chinese ancient art spanning five millennia, devoted to the spirit and refined taste of the Chinese literati.">
+    <meta property="og:image" content="https://www.read-gallery.com/assets/images/Photoroom_20250804_172005.JPG">
+    <meta property="og:url" content="https://www.read-gallery.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/components.css">
@@ -19,22 +28,26 @@
             <div class="nav-logo">
                 <h2 class="logo-text">讀畫樓</h2>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
                 <li><a href="#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
                 <li><a href="#collection" class="nav-link i18n" data-zh="藏品分类" data-en="Collection">藏品分类</a></li>
                 <li><a href="#contact" class="nav-link i18n" data-zh="联系我们" data-en="Contact">联系我们</a></li>
-                <li><a href="#visit" class="nav-link i18n" data-zh="参观预约" data-en="Visit">参观预约</a></li>
+                <li><a href="#contact" class="nav-link i18n" data-zh="参观预约" data-en="Visit">参观预约</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- 英雄区域 -->
-    <section id="home" class="hero">
+    <section id="home" class="hero hero-with-bg">
         <div class="hero-content">
             <div class="hero-title">讀畫樓</div>
-            <div class="hero-subtitle i18n" data-zh="讀畫樓是個崇尚中國文人精神和生活情趣的地方" data-en="A place devoted to the spirit and refined taste of the Chinese literati">讀畫樓是個崇尚中國文人精神和生活情趣的地方</div>
-            <button class="cta-button i18n" data-zh="探索藏品" data-en="Explore Collection">探索藏品</button>
+            <div class="hero-subtitle i18n" data-zh="崇尚中國文人精神和生活情趣" data-en="Devoted to the spirit and refined taste of the Chinese literati">崇尚中國文人精神和生活情趣</div>
+            <p class="hero-tagline i18n" data-zh="新石器至清 · 五千年古代藝術私人收藏" data-en="Neolithic to Qing · Five millennia of ancient art">新石器至清 · 五千年古代藝術私人收藏</p>
+            <a href="#collection" class="cta-button i18n" data-zh="探索藏品" data-en="Explore Collection">探索藏品</a>
         </div>
     </section>
 
@@ -48,23 +61,23 @@
             <div class="about-content">
                 <div class="about-text scroll-reveal">
                     <div class="lang-zh">
-                        <p class="text-indent">读画楼始建于宋代，历经千年沧桑，承载着深厚的文化底蕴。这里不仅是艺术品的收藏之所，更是文人雅士品茶论道、探讨人生哲理的雅集之地。</p>
-                        <p class="text-indent">我们致力于传承和弘扬中华优秀传统文化，通过精心挑选的古代艺术品，为现代人提供一个感受东方美学、体验文化魅力的精神家园。每一件藏品都承载着历史的记忆，诉说着古人的智慧与情怀。</p>
-                        <p class="text-indent">在这里，您可以静心品味每一幅画作的笔墨韵味，感受每一件器物的工艺之美，聆听每一段历史的回响。读画楼，不仅是一座艺术画廊，更是一座连接古今的文化桥梁。</p>
+                        <p class="text-indent">杭州讀畫樓，程氏家族私人收藏。讀畫樓之名，取「讀畫」之意——以文人之心，品鑒歷代丹青與器物之妙。數十年來，程氏一門秉持對中國古代藝術的熱忱，精心匯聚了一批跨越新石器時代至清代的珍貴藏品。</p>
+                        <p class="text-indent">收藏涵蓋陶瓷、玉器、青銅、佛教造像及書畫諸門類，尤以歷代名窯陶瓷與高古玉器見長。自馬家窯彩陶之樸拙，至宋代官窯之清雅，再到明清文房之精巧，每一件藏品皆承載着中華文明綿延五千年的審美精神。</p>
+                        <p class="text-indent">讀畫樓崇尚中國文人精神和生活情趣，願以古代藝術之美，連接古今，啟迪心靈。杭州、香港、西雅圖——三地珍藏，一脈相承。</p>
                     </div>
                     <div class="lang-en" style="display:none;">
-                        <p class="text-indent">Read Gallery traces its origins to the Song dynasty. Through a thousand years of change, it carries a profound cultural heritage. More than a place of collection, it is a gathering ground for scholars and connoisseurs — for tea, discourse, and the contemplation of life's deeper truths.</p>
-                        <p class="text-indent">We are devoted to preserving and advancing the finest traditions of Chinese culture. Through carefully selected ancient works of art, we offer a spiritual home where modern visitors may experience the beauty of Eastern aesthetics. Each piece carries the memory of history and speaks to the wisdom and sensibility of the ancients.</p>
-                        <p class="text-indent">Here you may quietly savor the brushwork of each painting, feel the beauty of craft in each object, and listen to the echoes of history. Read Gallery is not merely an art gallery — it is a cultural bridge connecting past and present.</p>
+                        <p class="text-indent">Hangzhou Read Gallery (讀畫樓) is the private collection of the Cheng family. The name "Read Gallery" reflects its founding philosophy: to approach art with the contemplative eye of the Chinese literati — reading paintings and objects as one reads poetry.</p>
+                        <p class="text-indent">Over decades, the collection has grown to encompass ceramics, jade, bronze, Buddhist sculpture, and calligraphy spanning from the Neolithic period to the Qing dynasty. Particular strengths include kiln ceramics from across China's great dynasties and archaic jade — from the primal beauty of Majiayao painted pottery to the refined elegance of Song dynasty wares.</p>
+                        <p class="text-indent">Read Gallery is devoted to the spirit and refined taste of the Chinese literati tradition, aspiring to connect past and present through the enduring beauty of ancient art. The collection is housed across Hangzhou, Hong Kong, and Seattle — three cities, one unbroken tradition.</p>
                     </div>
                 </div>
                 <div class="about-quote scroll-reveal">
                     <blockquote>
                         <div class="lang-zh">
                             <span class="quote-mark">"</span>
-                            画者，心印也。笔墨之间，见性情之真；丹青之上，显精神之妙。
+                            畫者，心印也。筆墨之間，見性情之真；丹青之上，顯精神之妙。
                             <span class="quote-mark">"</span>
-                            <cite>— 宋代画论</cite>
+                            <cite>— 宋代畫論</cite>
                         </div>
                         <div class="lang-en" style="display:none;">
                             <span class="quote-mark">"</span>
@@ -182,13 +195,35 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 讀畫樓. <span class="i18n" data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span>.</p>
+                <p>&copy; 2025 讀畫樓. <span class="i18n" data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span>.</p>
             </div>
         </div>
     </footer>
 
     <script src="js/animations.js"></script>
-    <script src="js/main.js?v=202503150300"></script>
+    <script src="js/main.js?v=202503150400"></script>
     <script src="js/i18n.js"></script>
+    <script>
+    // Hamburger menu toggle
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            // Close menu when clicking a link
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

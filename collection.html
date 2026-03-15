@@ -13,26 +13,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="index.html#home" class="logo-text">讀畫樓</a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html#home" class="nav-link">首页</a></li>
-                <li><a href="index.html#about" class="nav-link">讀畫樓介紹</a></li>
-                <li><a href="index.html#collection" class="nav-link">藏品分类</a></li>
-                <li><a href="index.html#features" class="nav-link">特色功能</a></li>
-                <li><a href="index.html#contact" class="nav-link">联系我们</a></li>
-                <li><a href="index.html#visit" class="nav-link">参观预约</a></li>
+                <li><a href="index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
+                <li><a href="index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
+                <li><a href="index.html#collection" class="nav-link i18n" data-zh="藏品分类" data-en="Collection">藏品分类</a></li>
+                <li><a href="index.html#contact" class="nav-link i18n" data-zh="联系我们" data-en="Contact">联系我们</a></li>
             </ul>
         </div>
     </nav>
     <section class="section collection-section">
         <div class="container">
             <div class="section-header scroll-reveal">
-                <h2 class="section-title">藏品展示</h2>
+                <h2 class="section-title i18n" data-zh="藏品展示" data-en="Collection">藏品展示</h2>
                 <div class="title-decoration"></div>
             </div>
             <div class="collection-grid"></div>
@@ -45,28 +42,27 @@
                     <h3>讀畫樓</h3>
                 </div>
                 <div class="footer-links">
-                    <h4>快速链接</h4>
+                    <h4 class="i18n" data-zh="快速链接" data-en="Quick Links">快速链接</h4>
                     <ul>
-                        <li><a href="index.html#home">首页</a></li>
-                        <li><a href="index.html#about">讀畫樓介紹</a></li>
-                        <li><a href="index.html#collection">藏品分类</a></li>
-                        <li><a href="index.html#features">特色功能</a></li>
+                        <li><a href="index.html#home" class="i18n" data-zh="首页" data-en="Home">首页</a></li>
+                        <li><a href="index.html#about" class="i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
+                        <li><a href="index.html#collection" class="i18n" data-zh="藏品分类" data-en="Collection">藏品分类</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
-                    <h4>联系方式</h4>
-                    <p>电话：+1 (425) 381-3925</p>
-                    <p>邮箱：allison@read-gallery.com</p>
-                    <p>地址：杭州、香港、西雅图</p>
+                    <h4 class="i18n" data-zh="联系方式" data-en="Contact">联系方式</h4>
+                    <p><span class="i18n" data-zh="电话" data-en="Phone">电话</span>：+1 (425) 381-3925</p>
+                    <p><span class="i18n" data-zh="邮箱" data-en="Email">邮箱</span>：allison@read-gallery.com</p>
+                    <p><span class="i18n" data-zh="地址" data-en="Locations">地址</span>：<span class="i18n" data-zh="杭州、香港、西雅图" data-en="Hangzhou · Hong Kong · Seattle">杭州、香港、西雅图</span></p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 讀畫樓. 保留所有权利.</p>
+                <p>&copy; 2024 讀畫樓. <span class="i18n" data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span>.</p>
             </div>
         </div>
     </footer>
     <script src="js/animations.js"></script>
-    <script src="js/main.js?v=202410170300"></script>
-
+    <script src="js/main.js?v=202503150300"></script>
+    <script src="js/i18n.js"></script>
 </body>
-</html> 
+</html>

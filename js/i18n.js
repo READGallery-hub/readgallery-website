@@ -68,32 +68,18 @@
         applyLang(currentLang === 'zh' ? 'en' : 'zh');
     }
 
-    // Inject toggle button into navbar
+    // Inject toggle button into navbar (always visible, not inside hamburger menu)
     function injectToggle() {
-        var navLinks = document.querySelector('.nav-links');
-        if (!navLinks) {
-            // For pages without nav-links (calligraphy-painting), inject into nav-container
-            var navContainer = document.querySelector('.nav-container');
-            if (navContainer) {
-                var btn = document.createElement('button');
-                btn.id = 'lang-toggle';
-                btn.className = 'lang-toggle-btn';
-                btn.onclick = toggle;
-                navContainer.appendChild(btn);
-            }
-            return;
-        }
-
-        // Check if already exists
         if (document.getElementById('lang-toggle')) return;
 
-        var li = document.createElement('li');
+        var navContainer = document.querySelector('.nav-container');
+        if (!navContainer) return;
+
         var btn = document.createElement('button');
         btn.id = 'lang-toggle';
         btn.className = 'lang-toggle-btn';
         btn.onclick = toggle;
-        li.appendChild(btn);
-        navLinks.appendChild(li);
+        navContainer.appendChild(btn);
     }
 
     // Inject CSS for toggle button

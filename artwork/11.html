@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/image-modal.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .artwork-detail-container { max-width: 800px; margin: 60px auto 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(44,36,22,0.10); padding: 40px 30px 30px 30px; }
@@ -33,7 +34,10 @@
             <div class="nav-logo">
                 <h2 class="logo-text"><a href="../index.html" style="color:inherit;text-decoration:none;">讀畫樓</a></h2>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
                 <li><a href="../index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
                 <li><a href="../collection.html" class="nav-link i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
@@ -63,5 +67,25 @@ Collection of Read Gallery (杭州讀畫樓)</div>
     </div>
     <script src="../js/image-modal.js"></script>
     <script src="../js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

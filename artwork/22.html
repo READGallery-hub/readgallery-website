@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/image-modal.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .artwork-img-large {
@@ -73,7 +74,10 @@
             <div class="nav-logo">
                 <a href="../index.html#home" class="logo-text">讀畫樓</a>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../index.html#home" class="nav-link">首页</a></li>
                 <li><a href="../index.html#about" class="nav-link">讀畫樓介紹</a></li>
                 <li><a href="../collection.html" class="nav-link">藏品展示</a></li>
@@ -141,11 +145,51 @@
     <!-- 图片模态框 -->
     <div id="imageModal" class="image-modal">
         <span class="image-modal-close" onclick="closeImageModal()">    <script src="../js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>×</span>
         <img class="image-modal-content" id="modalImage">
     </div>
 
     <script src="../js/image-modal.js"></script>
     <script src="../js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html> 

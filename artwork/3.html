@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/image-modal.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .artwork-detail-container { max-width: 800px; margin: 60px auto 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(44,36,22,0.10); padding: 40px 30px 30px 30px; }
@@ -33,7 +34,10 @@
             <div class="nav-logo">
                 <h2 class="logo-text"><a href="../index.html" style="color:inherit;text-decoration:none;">讀畫樓</a></h2>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
                 <li><a href="../index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
                 <li><a href="../collection.html" class="nav-link i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
@@ -52,6 +56,27 @@
         <div class="artwork-detail-desc lang-en" style="display:none;">A late Northern Wei gilt-bronze Buddhist offering plate. The lotus pattern echoes the ceiling design of Longmen Grottoes Cave 712 (Lotus Cave) and connects stylistically to Northern Wei lotus-motif inscriptions and gilt-bronze Buddhist statuary.
 
 Collection of Read Gallery (杭州讀畫樓)</div>
+<div class="provenance-section">
+            <button class="provenance-toggle" onclick="this.parentElement.classList.toggle('expanded')">
+                <span class="lang-zh">📜 了解更多：收藏故事与学术考证</span>
+                <span class="lang-en" style="display:none;">📜 Learn More: Provenance & Scholarly Notes</span>
+                <span class="toggle-arrow">▸</span>
+            </button>
+            <div class="provenance-content">
+                <div class="lang-zh">
+                    <h4>收藏故事</h4>
+                    <p>此盘得于常州古玩博览会。初见于两年前，后经反复研究考证方才入藏。因断代存在争议，其他藏家未予重视，遂以合理价格收入讀畫樓。</p>
+                    <h4>学术关联</h4>
+                    <p>盘面莲花纹饰与龙门石窟第712窟（莲花洞）穹顶莲纹高度一致，亦与北魏莲纹铭文及铜鎏金佛像的装饰风格一脉相承。莲花洞为龙门石窟北魏晚期代表性窟龛，穹顶大莲花浮雕举世闻名。此盘的莲纹构图与刀法，可视为同一时期佛教艺术在不同载体上的呈现。</p>
+                </div>
+                <div class="lang-en" style="display:none;">
+                    <h4>Provenance Story</h4>
+                    <p>Acquired at the Changzhou Antiques Fair. First seen two years prior, then researched extensively before acquisition. Other collectors undervalued it due to dating disagreements, allowing Read Gallery to acquire it at a reasonable price.</p>
+                    <h4>Scholarly Connection</h4>
+                    <p>The lotus pattern on this plate closely parallels the ceiling relief of Longmen Grottoes Cave 712 (Lotus Cave), as well as Northern Wei lotus-motif inscriptions and gilt-bronze Buddhist statuary. The Lotus Cave is one of the most celebrated late Northern Wei cave shrines at Longmen, famed for its grand ceiling lotus relief. The composition and carving technique of the lotus on this plate represent the same Buddhist artistic tradition expressed across different media.</p>
+                </div>
+            </div>
+        </div>
         <div class="artwork-detail-nav">
             <a href="2.html" class="i18n" data-zh="← 上一件" data-en="← Previous">← 上一件</a>
             <a href="4.html" class="i18n" data-zh="下一件 →" data-en="Next →">下一件 →</a>
@@ -63,5 +88,25 @@ Collection of Read Gallery (杭州讀畫樓)</div>
     </div>
     <script src="../js/image-modal.js"></script>
     <script src="../js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

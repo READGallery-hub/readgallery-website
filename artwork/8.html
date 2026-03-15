@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/image-modal.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .artwork-detail-container { max-width: 800px; margin: 60px auto 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(44,36,22,0.10); padding: 40px 30px 30px 30px; }
@@ -33,7 +34,10 @@
             <div class="nav-logo">
                 <h2 class="logo-text"><a href="../index.html" style="color:inherit;text-decoration:none;">讀畫樓</a></h2>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
                 <li><a href="../index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
                 <li><a href="../collection.html" class="nav-link i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
@@ -52,6 +56,27 @@
         <div class="artwork-detail-desc lang-en" style="display:none;">A Liangzhu-culture black pottery animal-shaped vessel (gong), acquired October 1, 2019 in Quzhou, Zhejiang. More refined in craft and form than comparable northern red pottery examples. Initially dated conservatively due to limited museum references; now attributed to the Liangzhu period.
 
 Collection of Read Gallery (讀畫樓)</div>
+<div class="provenance-section">
+            <button class="provenance-toggle" onclick="this.parentElement.classList.toggle('expanded')">
+                <span class="lang-zh">📜 了解更多：断代考证</span>
+                <span class="lang-en" style="display:none;">📜 Learn More: Attribution Research</span>
+                <span class="toggle-arrow">▸</span>
+            </button>
+            <div class="provenance-content">
+                <div class="lang-zh">
+                    <h4>收藏经过</h4>
+                    <p>2019年10月1日得于浙江衢州。衢州地处浙西，属良渚文化辐射区域边缘，偶有新石器时期遗物出现于民间收藏。</p>
+                    <h4>断代考证</h4>
+                    <p>初期因缺乏直接的博物馆参照器物，对其断代持保守态度。后经与《山东文物精萃》中收录的新石器时代红陶兽形器比较研究，确认两者在造型构思上具有明显的共通性。讀畫樓藏品为黑陶，工艺和造型均较北方红陶器更为精细考究，体现了南方良渚文化圈独特的制陶传统。现已将其归入良渚文化期，认定为该文化体系中难得的兽形器精品。</p>
+                </div>
+                <div class="lang-en" style="display:none;">
+                    <h4>Acquisition</h4>
+                    <p>Acquired October 1, 2019 in Quzhou, Zhejiang. Quzhou lies at the western edge of Zhejiang, within the broader influence zone of Liangzhu culture, where Neolithic artifacts occasionally surface in private collections.</p>
+                    <h4>Attribution Research</h4>
+                    <p>Initially dated conservatively due to the absence of direct museum parallels. Subsequent comparative study with a Neolithic red pottery animal-shaped vessel published in <em>Shandong Cultural Relics Highlights</em> (《山东文物精萃》) confirmed clear formal affinities between the two pieces. The Read Gallery example, executed in black pottery, demonstrates more refined craftsmanship and form than its northern red pottery counterpart, reflecting the distinctive ceramic tradition of the southern Liangzhu cultural sphere. It is now attributed to the Liangzhu period and recognized as a rare fine example of animal-shaped vessels within that cultural tradition.</p>
+                </div>
+            </div>
+        </div>
         <div class="artwork-detail-nav">
             <a href="7.html" class="i18n" data-zh="← 上一件" data-en="← Previous">← 上一件</a>
             <a href="9.html" class="i18n" data-zh="下一件 →" data-en="Next →">下一件 →</a>
@@ -63,5 +88,25 @@ Collection of Read Gallery (讀畫樓)</div>
     </div>
     <script src="../js/image-modal.js"></script>
     <script src="../js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

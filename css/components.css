@@ -1196,3 +1196,41 @@ a[href="#"]:hover {
     grid-template-columns: 1fr;
   }
 }
+/* Chat floating action button */
+.chat-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1a3a6b, #2a5298);
+    color: #f8f8ff;
+    padding: 14px 22px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: var(--font-primary, serif);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    animation: chat-fab-pulse 3s ease-in-out infinite;
+}
+.chat-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, #2a5298, #3a6bc5);
+}
+@keyframes chat-fab-pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 4px 20px rgba(42,82,152,0.6); }
+}
+@media (max-width: 768px) {
+    .chat-fab {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 18px;
+        font-size: 0.85rem;
+    }
+}

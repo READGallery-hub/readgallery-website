@@ -671,8 +671,10 @@
                 var buttonRegex = /\{\{BUTTON:(.+?):(.+?):(.+?)\}\}/g;
                 var cleanText = text.replace(buttonRegex, '');
                 if (cleanText.trim()) {
-                    var textNode = document.createTextNode(cleanText.trim());
-                    div.appendChild(textNode);
+                    var textSpan = document.createElement('span');
+                    textSpan.innerHTML = cleanText.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#7ab6ff;word-break:break-all;">$1</a>');
+                    div.appendChild(textSpan);
                 }
                 var match;
                 buttonRegex.lastIndex = 0;

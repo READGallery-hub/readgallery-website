@@ -255,13 +255,7 @@
 </head>
 <body>
     <!-- Password Screen -->
-    <div id="password-screen">
-        <h1>讀畫樓</h1>
-        <p>请输入访问密码</p>
-        <input type="password" id="pw-input" class="password-input" placeholder="密码" autofocus>
-        <button class="password-btn" onclick="checkPassword()">进入</button>
-        <div class="password-error" id="pw-error"></div>
-    </div>
+    <div id="password-screen" style="display:none;"></div>
 
     <!-- Chat Screen -->
     <div id="chat-screen">
@@ -791,10 +785,8 @@
             }
         });
     })();
-        // Auto-enter if already authenticated
-        if (sessionStorage.getItem('chat_auth') === PASSWORD) {
-            enterChat();
-        }
+        // Cloudflare Access gates the site — no password needed
+        enterChat();
     </script>
 </body>
 </html>

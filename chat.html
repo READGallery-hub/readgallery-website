@@ -336,19 +336,10 @@
 
         // Auto-enter is deferred to end of script (after all functions defined)
 
-        window.checkPassword = function() {
-            var input = document.getElementById('pw-input');
-            if (input.value === PASSWORD) {
-                sessionStorage.setItem('chat_auth', PASSWORD);
-                enterChat();
-            } else {
-                document.getElementById('pw-error').textContent = '密码错误，请重试';
-                input.value = '';
-                input.focus();
-            }
-        };
+        window.checkPassword = function() {};
 
-        document.getElementById('pw-input').addEventListener('keydown', function(e) {
+        var pwInput = document.getElementById('pw-input');
+        if (pwInput) pwInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') window.checkPassword();
         });
 

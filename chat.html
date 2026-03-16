@@ -672,22 +672,21 @@
                 var cleanText = text.replace(buttonRegex, '');
                 if (cleanText.trim()) {
                     var textSpan = document.createElement('span');
-                    // Extract LINK markers before escaping
-                    var links = [];
-                    var ct = cleanText.trim().replace(/\{\{LINK:(.+?):(https?:\/\/.+?)\}\}/g, function(m,label,url) {
-                        var ph = '___LINK' + links.length + '___';
-                        links.push({label:label, url:url});
-                        return ph;
+                    // Split text into parts: regular text and LINK markers
+                    var parts = cleanText.trim().split(/(\{\{LINK:[^}]+\}\})/g);
+                    var html = '';
+                    parts.forEach(function(part) {
+                        var lm = part.match(/^\{\{LINK:(.+?):(https?:\/\/.+)\}\}$/);
+                        if (lm) {
+                            html += '<a href="' + lm[2] + '" target="_blank" style="display:inline-block;margin:8px 0;padding:10px 20px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);border-radius:20px;color:#e8e4dd;text-decoration:none;font-size:0.92rem;">\ud83d\udcc4 ' + lm[1] + '</a>';
+                        } else {
+                            // Escape HTML then auto-link URLs
+                            var safe = part.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                            safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#7ab6ff;word-break:break-all;">$1</a>');
+                            html += safe;
+                        }
                     });
-                    // Escape HTML
-                    var safe = ct.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-                    // Restore LINK markers as styled buttons
-                    links.forEach(function(l, i) {
-                        safe = safe.replace('___LINK' + i + '___', '<a href="' + l.url + '" target="_blank" style="display:inline-block;margin:8px 0;padding:10px 20px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);border-radius:20px;color:#e8e4dd;text-decoration:none;font-size:0.92rem;">\ud83d\udcc4 ' + l.label + '</a>');
-                    });
-                    // Auto-link remaining plain URLs
-                    safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#7ab6ff;word-break:break-all;">$1</a>');
-                    textSpan.innerHTML = safe;
+                    textSpan.innerHTML = html;
                     div.appendChild(textSpan);
                 }
                 var match;

@@ -632,11 +632,10 @@
 
         function showSubmittedScreen() {
             var panel = document.getElementById('workflow-panel');
-            var msg = currentWorkflow === 'research' ? '研究请求已提交！\n助手正在分析您的藏品...' : '藏品信息已提交！\n助手正在处理...';
+            var msg = currentWorkflow === 'research' ? '✓ 研究请求已提交！' : '✓ 藏品信息已提交！';
             panel.innerHTML = '<div class="wf-loading"><div class="spinner"></div><p>' + msg + '</p>' +
-                '<p style="margin-top:16px;font-size:0.85rem;color:#667799;">处理可能需要几分钟，结果会出现在对话中</p>' +
-                '<button class="wf-btn" style="margin-top:24px;" onclick="goToChatAfterSubmit()">查看对话</button>' +
-                '<button class="wf-btn secondary" style="margin-top:8px;" onclick="showMenu()">返回菜单</button></div>';
+                '<p style="margin-top:16px;font-size:0.85rem;color:#667799;">正在跳转到对话...</p></div>';
+            setTimeout(function() { goToChatAfterSubmit(); }, 2000);
         }
 
         window.goToChatAfterSubmit = function() {

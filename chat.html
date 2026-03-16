@@ -373,11 +373,16 @@
         };
 
         window.startFreeChat = function() {
-            setMode('chat');
-            document.getElementById('chat-input').focus();
-            loadMessages();
-            if (pollTimer) clearInterval(pollTimer);
-            pollTimer = setInterval(pollMessages, 3000);
+            try {
+                setMode('chat');
+                document.getElementById('chat-input').focus();
+                loadMessages();
+                if (pollTimer) clearInterval(pollTimer);
+                pollTimer = setInterval(pollMessages, 3000);
+            } catch(e) {
+                alert('错误: ' + e.message);
+                console.error('startFreeChat error:', e);
+            }
         };
 
         // ========== FILE INPUT ==========
@@ -440,12 +445,17 @@
         ];
 
         window.startWorkflow = function(type) {
-            currentWorkflow = type;
-            wfStep = 0;
-            wfData = {};
-            wfPhotos = [];
-            setMode('workflow');
-            renderStep();
+            try {
+                currentWorkflow = type;
+                wfStep = 0;
+                wfData = {};
+                wfPhotos = [];
+                setMode('workflow');
+                renderStep();
+            } catch(e) {
+                alert('错误: ' + e.message);
+                console.error('startWorkflow error:', e);
+            }
         };
 
         function getSteps() {

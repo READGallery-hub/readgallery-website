@@ -2,176 +2,114 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>《龙字书法》 - 讀畫樓</title>
-    <meta name="description" content="讀畫樓藏品展示 - 龙字书法">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙字书法 - 藏品详情</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <link rel="stylesheet" href="../css/image-modal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .artwork-img-large {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .artwork-img-large:hover {
-            transform: scale(1.02);
-        }
-        /* 模态框样式 */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            animation: fadeIn 0.3s ease;
-        }
-        .image-modal-content {
-            width: auto;
-            height: auto;
-            min-width: 400px;
-            min-height: 400px;
-            max-width: 95vw;
-            max-height: 95vh;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-        .image-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .image-modal-close:hover {
-            color: #ccc;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/artwork-detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Lora:wght@400;500&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- 导航栏 -->
+<body class="artwork-page">
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="../index.html#home" class="logo-text">讀畫樓</a>
+                <h2 class="logo-text"><a href="../index.html">讀畫樓</a></h2>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
             <ul class="nav-links" id="nav-links">
-                <li><a href="../index.html#home" class="nav-link">首页</a></li>
-                <li><a href="../index.html#about" class="nav-link">讀畫樓介紹</a></li>
-                <li><a href="../collection.html" class="nav-link">藏品展示</a></li>
-                <li><a href="../index.html#features" class="nav-link">特色功能</a></li>
-                <li><a href="../index.html#contact" class="nav-link">联系我们</a></li>
-                <li><a href="../index.html#visit" class="nav-link">参观预约</a></li>
+                <li><a href="../index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
+                <li><a href="../index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
+                <li><a href="../collection.html" class="nav-link i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
+                <li><a href="../index.html#contact" class="nav-link i18n" data-zh="联系我们" data-en="Contact">联系我们</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="section artwork-detail-section">
-        <div class="container">
-            <div class="artwork-detail">
-                <div class="artwork-image-large">
-                    <img src="../assets/images/chinese-dragon-calligraphy.JPG" alt="龙字书法" class="artwork-img-large" onclick="openImageModal(this.src, this.alt)">
-                </div>
-                <div class="artwork-info-detail">
-                    <h1 class="artwork-title-large">《龙字书法》</h1>
-                    <div class="artwork-meta">
-                        <p><strong>时期：</strong>传统中国书法</p>
-                        <p><strong>材质：</strong>草书</p>
-                        <p><strong>尺寸：</strong>立轴</p>
-                    </div>
-                    <div class="artwork-description">
-                        <p>此作品为传统中国书法艺术，以草书体书写"龙"字。笔法遒劲有力，墨色浓淡相宜，体现了书法艺术的精髓。龙字寓意祥瑞，象征着中华民族的精神图腾，是传统中国书画艺术的珍贵代表。</p>
-                        <p>草书作为中国书法的重要书体之一，以其流畅的笔法和独特的艺术魅力著称。此作品中的"龙"字，笔画如行云流水，气势磅礴，充分展现了草书艺术的独特魅力。</p>
-                    </div>
-                    <div class="artwork-actions">
-                        <a href="../calligraphy-painting.html" class="btn btn-secondary">返回中国书画</a>
-                        <a href="../collection.html" class="btn btn-primary">查看所有藏品</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="artwork-detail-wrapper">
+        <a class="artwork-detail-back i18n" href="../calligraphy-painting.html" data-zh="← 返回中国书画" data-en="← Back to Calligraphy & Painting">← 返回中国书画</a>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>讀畫樓</h3>
+        <div class="artwork-detail-header">
+            <div class="artwork-detail-title i18n" data-zh="《龙字书法》" data-en="Dragon Calligraphy">《龙字书法》</div>
+            <div class="artwork-detail-subtitle i18n" data-zh="传统中国书法 · 草书 · 立轴" data-en="Traditional Chinese Calligraphy · Cursive Script · Hanging Scroll">传统中国书法 · 草书 · 立轴</div>
+        </div>
+
+        <div class="artwork-tabs">
+            <button class="artwork-tab active" data-tab="details"><span class="lang-zh">详情</span><span class="lang-en" style="display:none">Details</span></button>
+            <button class="artwork-tab" data-tab="photos"><span class="lang-zh">图片</span><span class="lang-en" style="display:none">Photos</span></button>
+            <button class="artwork-tab" data-tab="research"><span class="lang-zh">研究</span><span class="lang-en" style="display:none">Research</span></button>
+        </div>
+
+        <div class="artwork-tab-panel active" id="panel-details">
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <div class="detail-card-label"><span class="lang-zh">类别</span><span class="lang-en" style="display:none">Category</span></div>
+                    <div class="detail-card-value"><span class="lang-zh">传统中国书法</span><span class="lang-en" style="display:none">Traditional Chinese Calligraphy</span></div>
                 </div>
-                <div class="footer-links">
-                    <h4>快速链接</h4>
-                    <ul>
-                        <li><a href="../index.html#home">首页</a></li>
-                        <li><a href="../index.html#about">讀畫樓介紹</a></li>
-                        <li><a href="../collection.html">藏品展示</a></li>
-                        <li><a href="../index.html#features">特色功能</a></li>
-                    </ul>
+                <div class="detail-card">
+                    <div class="detail-card-label"><span class="lang-zh">书体</span><span class="lang-en" style="display:none">Script</span></div>
+                    <div class="detail-card-value"><span class="lang-zh">草书</span><span class="lang-en" style="display:none">Cursive Script</span></div>
                 </div>
-                <div class="footer-contact">
-                    <h4>联系方式</h4>
-                    <p>电话：+1 (425) 381-3925</p>
-                    <p>邮箱：allison@read-gallery.com</p>
-                    <p>地址：杭州、香港、西雅图</p>
+                <div class="detail-card">
+                    <div class="detail-card-label"><span class="lang-zh">形制</span><span class="lang-en" style="display:none">Format</span></div>
+                    <div class="detail-card-value"><span class="lang-zh">立轴</span><span class="lang-en" style="display:none">Hanging Scroll</span></div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-card-label"><span class="lang-zh">收藏</span><span class="lang-en" style="display:none">Collection</span></div>
+                    <div class="detail-card-value"><span class="lang-zh">杭州讀畫樓</span><span class="lang-en" style="display:none">Read Gallery</span></div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 讀畫樓. 保留所有权利.</p>
+            <div class="detail-description">
+                <p class="lang-zh">此作品为传统中国书法艺术，以草书体书写"龙"字。笔法遒劲有力，墨色浓淡相宜，体现了书法艺术的精髓。龙字寓意祥瑞，象征着中华民族的精神图腾。
+
+草书作为中国书法的重要书体之一，以其流畅的笔法和独特的艺术魅力著称。此作品中的"龙"字，笔画如行云流水，气势磅礴，充分展现了草书艺术的独特魅力。</p>
+                <p class="lang-en" style="display:none">A work of traditional Chinese calligraphy featuring the character "Dragon" (龙) in cursive script. The brushwork is bold and powerful, with masterful modulation of ink density, embodying the essence of calligraphic art.
+
+Cursive script is celebrated for its fluid brushwork and unique artistic charm. In this work, the strokes flow like clouds and water, conveying magnificent momentum.</p>
             </div>
         </div>
-    </footer>
-    <script src="../js/animations.js"></script>
-    <!-- 图片模态框 -->
+
+        <div class="artwork-tab-panel" id="panel-photos">
+            <div class="photos-grid">
+                <div class="photo-item">
+                    <img src="../assets/images/chinese-dragon-calligraphy.JPG" alt="龙字书法" onclick="openImageModal(this.src, this.alt)">
+                </div>
+            </div>
+        </div>
+
+        <div class="artwork-tab-panel" id="panel-research">
+            <div class="research-placeholder">
+                <span class="research-icon">📖</span>
+                <p class="lang-zh">研究报告即将发布</p>
+                <p class="lang-en" style="display:none">Research report coming soon</p>
+            </div>
+        </div>
+
+        <div class="artwork-detail-nav">
+            <a href="../calligraphy-painting.html" class="i18n" data-zh="← 返回书画" data-en="← Back">← 返回书画</a>
+            <a href="23.html" class="i18n" data-zh="下一件 →" data-en="Next →">下一件 →</a>
+        </div>
+    </div>
+
     <div id="imageModal" class="image-modal">
-        <span class="image-modal-close" onclick="closeImageModal()">    <script src="../js/i18n.js"></script>
-    <script>
-    (function(){
-        var btn = document.getElementById('hamburger');
-        var nav = document.getElementById('nav-links');
-        if(btn && nav){
-            btn.addEventListener('click', function(){
-                var open = nav.classList.toggle('open');
-                btn.classList.toggle('active');
-                btn.setAttribute('aria-expanded', open);
-            });
-            nav.querySelectorAll('.nav-link').forEach(function(link){
-                link.addEventListener('click', function(){
-                    nav.classList.remove('open');
-                    btn.classList.remove('active');
-                    btn.setAttribute('aria-expanded', 'false');
-                });
-            });
-        }
-    })();
-    </script>
-</body>×</span>
+        <span class="image-modal-close" onclick="closeImageModal()">×</span>
         <img class="image-modal-content" id="modalImage">
     </div>
 
     <script src="../js/image-modal.js"></script>
     <script src="../js/i18n.js"></script>
     <script>
+    document.querySelectorAll('.artwork-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.artwork-tab').forEach(function(t) { t.classList.remove('active'); });
+            document.querySelectorAll('.artwork-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+            tab.classList.add('active');
+            document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+        });
+    });
     (function(){
         var btn = document.getElementById('hamburger');
         var nav = document.getElementById('nav-links');
@@ -192,4 +130,4 @@
     })();
     </script>
 </body>
-</html> 
+</html>

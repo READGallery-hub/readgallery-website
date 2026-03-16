@@ -6,217 +6,75 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';">
     <title>中国书画 - 讀畫樓</title>
     <meta name="description" content="讀畫樓中国书画藏品展示">
-    <style>
-        /* 完全独立的样式 */
-        body {
-            background: #1a1a2e;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .navbar {
-            background: #16213e;
-            padding: 15px 0;
-            margin-bottom: 40px;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo-text {
-            color: white;
-            font-size: 1.5rem;
-            text-decoration: none;
-        }
-        
-
-        
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: white;
-        }
-        
-        .collection-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .artwork-card {
-            background: #16213e;
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            width: 100%;
-        }
-        
-        .artwork-card:hover {
-            transform: translateY(-4px);
-            background: #2a4a7a;
-        }
-        
-        .artwork-image {
-            width: 100%;
-            height: 300px;
-            background: #16213e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .artwork-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        .artwork-info {
-            padding: 20px;
-        }
-        
-        .artwork-title {
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .artwork-brief {
-            color: #e0e8ff;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
-        .footer-enhanced {
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 48px 0 24px;
-            background: rgba(0,0,0,0.15);
-            margin-top: 40px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr 1fr;
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-        .footer-brand h3 { font-size: 1.5rem; color: #f8f8ff; margin-bottom: 8px; letter-spacing: 3px; }
-        .footer-brand .brand-sub { font-size: 0.85rem; color: #b0b8d1; margin-bottom: 12px; }
-        .footer-col h4 { color: #f8f8ff; font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 1px; }
-        .footer-col ul { list-style: none; padding: 0; margin: 0; }
-        .footer-col ul li { margin-bottom: 8px; }
-        .footer-col ul li a, .footer-col p { color: #b0b8d1; font-size: 0.85rem; line-height: 1.6; text-decoration: none; }
-        .footer-col ul li a:hover { color: #4a90e2; }
-        .footer-social a { color: #b0b8d1; font-size: 0.85rem; display: block; margin-bottom: 6px; text-decoration: none; }
-        .footer-social a:hover { color: #4a90e2; }
-        .footer-bottom-enhanced { text-align: center; padding-top: 24px; margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); color: #b0b8d1; font-size: 0.8rem; max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 30px; padding-right: 30px; }
-        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 20px; } }
-        @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-        }
-        
-        /* 移动设备响应式设计 */
-        @media (max-width: 768px) {
-            .collection-grid {
-                display: flex;
-                flex-direction: column;
-                max-width: 600px;
-                padding: 0 20px;
-            }
-            
-            .artwork-image {
-                height: 250px;
-            }
-            
-            .section {
-                padding: 20px 10px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Lora:wght@400;500&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 简化的头部，只保留logo -->
-    <div class="navbar">
+    <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html#home" class="logo-text">讀畫樓</a>
+                <h2 class="logo-text"><a href="index.html">讀畫樓</a></h2>
             </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home" class="nav-link i18n" data-zh="首页" data-en="Home">首页</a></li>
+                <li><a href="index.html#about" class="nav-link i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
+                <li><a href="collection.html" class="nav-link i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
+                <li><a href="index.html#contact" class="nav-link i18n" data-zh="联系我们" data-en="Contact">联系我们</a></li>
+            </ul>
         </div>
-    </div>
-    <section class="section collection-section">
+    </nav>
+
+    <section class="section collection-section" style="padding-top: 120px;">
         <div class="container">
             <div class="section-header scroll-reveal">
-                <h2 class="section-title">藏品展示</h2>
+                <h2 class="section-title i18n" data-zh="中国书画" data-en="Chinese Calligraphy & Painting">中国书画</h2>
                 <div class="title-decoration"></div>
             </div>
-            <div class="collection-grid" id="calligraphy-painting-grid">
-                <!-- 静态内容作为备用 -->
-                <div class="artwork-card scroll-reveal" onclick="location.href='artwork/22.html'" style="cursor: pointer;">
-                    <div class="artwork-image">
-                        <img src="assets/images/chinese-dragon-calligraphy.JPG" alt="龙字书法" class="artwork-img" loading="lazy">
-                    </div>
-                    <div class="artwork-info">
-                        <h3 class="artwork-title">龙字书法</h3>
-                        <p class="artwork-brief">传统中国书法，龙字草书，笔法遒劲。</p>
-                    </div>
-                </div>
-                <div class="artwork-card scroll-reveal" onclick="location.href='artwork/23.html'" style="cursor: pointer;">
-                    <div class="artwork-image">
-                        <img src="assets/images/chinese-horse-painting.JPG" alt="骏马图" class="artwork-img" loading="lazy">
-                    </div>
-                    <div class="artwork-info">
-                        <h3 class="artwork-title">骏马图</h3>
-                        <p class="artwork-brief">传统中国水墨画，骏马山水，笔法流畅。</p>
-                    </div>
-                </div>
+            <div class="category-gallery">
+                <a class="category-card" href="artwork/22.html">
+                    <img src="assets/images/chinese-dragon-calligraphy.JPG" alt="龙字书法" class="category-img" loading="lazy">
+                    <div class="category-title i18n" data-zh="龙字书法" data-en="Dragon Calligraphy">龙字书法</div>
+                </a>
+                <a class="category-card" href="artwork/23.html">
+                    <img src="assets/images/chinese-horse-painting.JPG" alt="骏马图" class="category-img" loading="lazy">
+                    <div class="category-title i18n" data-zh="骏马图" data-en="Galloping Horse">骏马图</div>
+                </a>
             </div>
         </div>
     </section>
+
     <footer class="footer-enhanced">
         <div class="footer-grid">
             <div class="footer-brand">
                 <h3>讀畫樓</h3>
                 <p class="brand-sub">Read Gallery</p>
-                <p style="color:#b0b8d1;font-size:0.85rem;">杭州 · 西雅图</p>
+                <p style="color:var(--gallery-secondary);font-size:0.85rem;">
+                    <span class="lang-zh">杭州 · 西雅图</span>
+                    <span class="lang-en" style="display:none">Hangzhou · Seattle</span>
+                </p>
             </div>
             <div class="footer-col">
-                <h4>快速链接</h4>
+                <h4 class="i18n" data-zh="快速链接" data-en="Quick Links">快速链接</h4>
                 <ul>
-                    <li><a href="index.html#home">首页</a></li>
-                    <li><a href="index.html#about">讀畫樓介紹</a></li>
-                    <li><a href="collection.html">藏品展示</a></li>
-                    <li><a href="calligraphy-painting.html">中国书画</a></li>
+                    <li><a href="index.html#home" class="i18n" data-zh="首页" data-en="Home">首页</a></li>
+                    <li><a href="index.html#about" class="i18n" data-zh="讀畫樓介紹" data-en="About">讀畫樓介紹</a></li>
+                    <li><a href="collection.html" class="i18n" data-zh="藏品展示" data-en="Collection">藏品展示</a></li>
+                    <li><a href="calligraphy-painting.html" class="i18n" data-zh="中国书画" data-en="Calligraphy & Painting">中国书画</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>联系方式</h4>
-                <p><a href="mailto:allison@read-gallery.com" style="color:#b0b8d1;">allison@read-gallery.com</a></p>
-                <p style="color:#b0b8d1;font-size:0.85rem;">+1 (425) 381-3925</p>
+                <h4 class="i18n" data-zh="联系方式" data-en="Contact">联系方式</h4>
+                <p><a href="mailto:allison@read-gallery.com" style="color:var(--gallery-secondary);">allison@read-gallery.com</a></p>
+                <p style="color:var(--gallery-secondary);font-size:0.85rem;">+1 (425) 381-3925</p>
             </div>
             <div class="footer-col">
-                <h4>关注我们</h4>
+                <h4 class="i18n" data-zh="关注我们" data-en="Follow Us">关注我们</h4>
                 <div class="footer-social">
                     <a href="https://www.instagram.com/the_read_gallery/" target="_blank">Instagram @the_read_gallery</a>
                     <a href="https://www.tiktok.com/@read_gallery_1965" target="_blank">TikTok @read_gallery_1965</a>
@@ -224,23 +82,31 @@
             </div>
         </div>
         <div class="footer-bottom-enhanced">
-            <p>&copy; 2026 讀畫樓 Read Gallery. 保留所有权利.</p>
+            <p>&copy; 2026 讀畫樓 Read Gallery. <span class="i18n" data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span>.</p>
         </div>
     </footer>
-    <script>
-        console.log('页面加载完成');
-        
-        // 测试DOM元素
-        const grid = document.getElementById('calligraphy-painting-grid');
-        console.log('网格元素:', grid);
-        
-        if (grid) {
-            console.log('网格元素存在，内容:', grid.innerHTML);
-        } else {
-            console.log('网格元素不存在');
-        }
-    </script>
+
     <script src="js/animations.js"></script>
     <script src="js/i18n.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('hamburger');
+        var nav = document.getElementById('nav-links');
+        if(btn && nav){
+            btn.addEventListener('click', function(){
+                var open = nav.classList.toggle('open');
+                btn.classList.toggle('active');
+                btn.setAttribute('aria-expanded', open);
+            });
+            nav.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    nav.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    })();
+    </script>
 </body>
-</html> 
+</html>

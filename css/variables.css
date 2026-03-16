@@ -1,19 +1,22 @@
-/* J.J. Lally 深蓝展览页风格色调系统 */
+/* 讀畫樓 Dark Luxury 色調系統 */
 :root {
-    --gallery-bg-gradient: linear-gradient(to bottom, #1F3B69 0%, #1F3B69 100%);
-    --gallery-navy-dark: #1F3B69;      /* 顶部深蓝 */
-    --gallery-navy-mid:  #1F3B69;      /* 中部深蓝 */
-    --gallery-navy:      #1F3B69;      /* 藏青蓝 */
-    --gallery-navy-light:#1F3B69;      /* 较亮蓝灰 */
-    --gallery-text:      #f8f8ff;      /* 亮白文字 */
-    --gallery-secondary: #b0b8d1;      /* 淡蓝灰文字 */
-    --gallery-link:      #4a90e2;      /* 亮蓝高亮 */
-    --gallery-link-hover: #7ab6ff;     /* 高亮hover */
-    --gallery-card:      transparent;  /* 卡片背景透明 */
-    --gallery-shadow:    none;
-    --gallery-border:    #22304a;      /* 深蓝边框 */
+    --gallery-bg: #0d0d1a;
+    --gallery-bg-gradient: linear-gradient(to bottom, #0d0d1a 0%, #0d0d1a 100%);
+    --gallery-navy-dark: #0d0d1a;
+    --gallery-navy-mid:  #15152a;
+    --gallery-navy:      #15152a;
+    --gallery-navy-light:#1a1a30;
+    --gallery-text:      #e8e4dd;
+    --gallery-secondary: #8e8ea0;
+    --gallery-link:      #c9a84c;
+    --gallery-link-hover: #ddb85e;
+    --gallery-card:      #15152a;
+    --gallery-shadow:    0 4px 24px rgba(0,0,0,0.3);
+    --gallery-border:    rgba(255,255,255,0.06);
 
     /* 字體系統 */
+    --font-heading: 'Cormorant Garamond', 'Noto Serif TC', Georgia, serif;
+    --font-body: 'Lora', 'Noto Serif SC', '思源宋體', Georgia, serif;
     --font-primary: 'Noto Serif TC', '思源宋體', '华文中宋', Georgia, 宋體, SimSun, serif;
     --font-weight-light: 300;
     --font-weight-normal: 400;
@@ -41,9 +44,9 @@
     --transition-slow: 0.5s;
 
     /* 陰影系統 */
-    --shadow-light: none;
-    --shadow-medium: none;
-    --shadow-heavy: none;
+    --shadow-light: 0 2px 12px rgba(0,0,0,0.2);
+    --shadow-medium: 0 4px 24px rgba(0,0,0,0.3);
+    --shadow-heavy: 0 8px 40px rgba(0,0,0,0.4);
 
     /* 邊框圓角 */
     --border-radius-sm: 4px;
@@ -51,16 +54,19 @@
     --border-radius-lg: 12px;
 
     /* 漸變背景 */
-    --gradient-primary: var(--gallery-bg-gradient);
-    --gradient-hero: var(--gallery-bg-gradient);
-    --gradient-button: linear-gradient(45deg, #1F3B69, #4a90e2);
-    --gradient-button-hover: linear-gradient(45deg, #4a90e2, #1F3B69);
+    --gradient-primary: linear-gradient(to bottom, #0d0d1a, #0d0d1a);
+    --gradient-hero: linear-gradient(to bottom, #0d0d1a, #0d0d1a);
+    --gradient-button: linear-gradient(45deg, #1a1a30, #252540);
+    --gradient-button-hover: linear-gradient(45deg, #252540, #1a1a30);
 
-    /* 宋代颜色变量 - 深蓝展览页适配 */
-    --song-paper: #f8f8ff;
-    --song-ink: #2c3e50;        /* 正文文字颜色 - 深灰蓝 */
-    --song-tea: #2c3e50;        /* 元数据文字颜色 - 深灰蓝 */
-    --song-jade: #22304a;
-    --song-mist: #18203a;
-    
-} 
+    /* 金色強調 */
+    --accent-gold: #c9a84c;
+
+    /* 宋代颜色变量 - 兼容舊代碼 */
+    --song-paper: #0d0d1a;
+    --song-ink: #e8e4dd;
+    --song-tea: #8e8ea0;
+    --song-jade: #c9a84c;
+    --song-mist: #15152a;
+    --song-gold: #c9a84c;
+}

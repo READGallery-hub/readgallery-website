@@ -136,6 +136,16 @@
 
         .notice { text-align: center; font-size: 0.78rem; color: #556688; padding: 4px; }
 
+        /* Inline buttons in bot messages */
+        .msg-btn {
+            display: inline-block; margin: 8px 4px 4px 0; padding: 10px 20px;
+            background: linear-gradient(to right, #3953b3, #5a80d8); color: #fff;
+            border: none; border-radius: 20px; font-size: 0.92rem; font-family: inherit;
+            cursor: pointer; transition: all 0.3s; min-height: 44px;
+        }
+        .msg-btn:hover { opacity: 0.85; }
+        .msg-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #555; }
+
         /* ===== MENU / WORKFLOW STYLES ===== */
         .menu-panel {
             display: none; flex-direction: column; align-items: center; justify-content: center;
@@ -666,8 +676,39 @@
             }
 
             if (text) {
-                var textNode = document.createTextNode(text);
-                div.appendChild(textNode);
+                // Parse inline buttons: {{BUTTON:label:action_type:action_data}}
+                var buttonRegex = /\{\{BUTTON:(.+?):(.+?):(.+?)\}\}/g;
+                var cleanText = text.replace(buttonRegex, '');
+                if (cleanText.trim()) {
+                    var textNode = document.createTextNode(cleanText.trim());
+                    div.appendChild(textNode);
+                }
+                var match;
+                buttonRegex.lastIndex = 0;
+                while ((match = buttonRegex.exec(text)) !== null) {
+                    var btnEl = document.createElement('button');
+                    btnEl.className = 'msg-btn';
+                    btnEl.textContent = match[1];
+                    btnEl.setAttribute('data-action', match[2]);
+                    btnEl.setAttribute('data-data', match[3]);
+                    (function(btn, actionType, actionData) {
+                        btn.onclick = function() {
+                            btn.disabled = true;
+                            btn.textContent = '已提交，正在生成报告...';
+                            fetch(API_BASE + '/chat', {
+                                method: 'POST',
+                                headers: apiHeaders(),
+                                body: JSON.stringify({ type: 'action', action: actionType, data: { originalMessageId: actionData } })
+                            }).then(function(r) { return r.json(); }).then(function(d) {
+                                if (d.ok) {
+                                    waitingForReply = true;
+                                    showTyping(true);
+                                }
+                            }).catch(function() { btn.textContent = '提交失败，请重试'; btn.disabled = false; });
+                        };
+                    })(btnEl, match[2], match[3]);
+                    div.appendChild(btnEl);
+                }
             }
             if (ts) {
                 var timeSpan = document.createElement('span');

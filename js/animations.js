@@ -100,10 +100,10 @@ function initNavbarScroll() {
         
         // 添加背景透明度
         if (scrollTop > 100) {
-            navbar.style.background = 'rgba(245, 242, 232, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(44, 36, 22, 0.1)';
+            navbar.style.background = 'rgba(13, 13, 26, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
         } else {
-            navbar.style.background = 'rgba(245, 242, 232, 0.95)';
+            navbar.style.background = 'rgba(13, 13, 26, 0.95)';
             navbar.style.boxShadow = 'none';
         }
         

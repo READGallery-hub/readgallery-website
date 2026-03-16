@@ -193,20 +193,75 @@ const artworks = [
     }
 ];
 
-// 生成藏品卡片HTML (bilingual)
+// Dynasty filter mapping
+var dynastyFilters = [
+    { zh: '全部', en: 'All', periods: null },
+    { zh: '新石器', en: 'Neolithic', periods: ['新石器时代', '良渚文化'] },
+    { zh: '商周', en: 'Shang–Zhou', periods: ['商', '周', '商代', '周代'] },
+    { zh: '秦汉', en: 'Qin–Han', periods: ['西汉', '东汉', '秦代', '汉代'] },
+    { zh: '魏晋南北朝', en: 'Wei–Jin', periods: ['北魏', '西晋', '东晋', '南北朝'] },
+    { zh: '隋唐五代', en: 'Sui–Tang', periods: ['唐代', '唐/五代', '五代', '隋代'] },
+    { zh: '宋', en: 'Song', periods: ['宋代', '宋/金'] },
+    { zh: '辽金西夏', en: 'Liao–Xia', periods: ['辽代', '西夏', '金代'] },
+    { zh: '元明清', en: 'Yuan–Qing', periods: ['元代', '明代', '清代'] },
+    { zh: '待考', en: 'TBC', periods: ['待考', 'TBC'] }
+];
+
+var currentFilter = null; // null = all
+
+function renderDynastyFilter() {
+    var bar = document.getElementById('dynasty-filter');
+    if (!bar) return;
+    var lang = (window.I18n && window.I18n.getLang) ? window.I18n.getLang() : 'zh';
+    bar.innerHTML = dynastyFilters.map(function(f, i) {
+        var label = lang === 'en' ? f.en : f.zh;
+        var active = (f.periods === null && currentFilter === null) || (currentFilter === f) ? ' active' : '';
+        return '<button class="dynasty-pill' + active + '" data-idx="' + i + '">' + label + '</button>';
+    }).join('');
+    bar.querySelectorAll('.dynasty-pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = parseInt(this.getAttribute('data-idx'));
+            currentFilter = dynastyFilters[idx].periods === null ? null : dynastyFilters[idx];
+            applyFilter();
+            bar.querySelectorAll('.dynasty-pill').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+        });
+    });
+}
+
+function applyFilter() {
+    var cards = document.querySelectorAll('.artwork-card');
+    var delay = 0;
+    cards.forEach(function(card) {
+        var period = card.getAttribute('data-period');
+        var show = !currentFilter || (currentFilter.periods && currentFilter.periods.indexOf(period) !== -1);
+        if (show) {
+            card.classList.remove('filter-hide');
+            card.classList.add('filter-show');
+            card.style.animationDelay = delay + 'ms';
+            delay += 50;
+        } else {
+            card.classList.add('filter-hide');
+            card.classList.remove('filter-show');
+        }
+    });
+}
+
+// 生成藏品卡片HTML (bilingual, luxury style)
 function createArtworkCard(artwork, idx) {
     var lang = (window.I18n && window.I18n.getLang) ? window.I18n.getLang() : 'zh';
     var title = lang === 'en' ? (artwork.title_en || artwork.title) : artwork.title;
+    var period = lang === 'en' ? (artwork.period_en || artwork.period) : artwork.period;
     var brief = lang === 'en' ? (artwork.brief_en || artwork.brief || '') : (artwork.brief || '');
-    if (brief.length > 22) brief = brief.slice(0, 22) + '...';
 
     return `
-        <div class="artwork-card scroll-reveal" onclick="location.href='artwork/${idx+1}.html'">
+        <div class="artwork-card filter-show" data-period="${artwork.period}" onclick="location.href='artwork/${idx+1}.html'">
             <div class="artwork-image">
-                <img src="${artwork.image}" alt="${title}" class="artwork-img" loading="lazy">
+                <img src="${artwork.image}" alt="${title}" loading="lazy">
             </div>
             <div class="artwork-info">
                 <h3 class="artwork-title">${title}</h3>
+                <span class="artwork-period-tag">${period}</span>
                 <p class="artwork-brief">${brief}</p>
             </div>
         </div>
@@ -274,12 +329,24 @@ function init() {
     handleErrors();
     initLoadingState();
     renderArtworks();
+    renderDynastyFilter();
     if (window.AnimationManager) window.AnimationManager.init();
     initLazyLoading();
     renderSimpleGallery();
 
     // Hook i18n after it loads
-    setTimeout(hookI18nForRerender, 200);
+    setTimeout(function() {
+        hookI18nForRerender();
+        // Also re-render filters on lang change
+        if (window.I18n && window.I18n.apply && !window._filterHooked) {
+            var orig = window.I18n.apply;
+            window.I18n.apply = function(lang) {
+                orig(lang);
+                renderDynastyFilter();
+            };
+            window._filterHooked = true;
+        }
+    }, 200);
 }
 
 if (document.readyState === 'loading') {

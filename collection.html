@@ -14,7 +14,7 @@
     <style>
         /* === Collection Page Luxury Redesign === */
         .collection-section {
-            background: #0d0d1a;
+            background: var(--gallery-bg);
             min-height: 100vh;
             padding: 120px 0 80px;
         }
@@ -26,7 +26,7 @@
         }
         .collection-section .section-title {
             font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
-            color: #e8e4dd;
+            color: var(--gallery-text);
             font-size: 2.4rem;
             font-weight: 300;
             letter-spacing: 0.15em;
@@ -55,19 +55,19 @@
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 24px;
             background: transparent;
-            color: rgba(255,255,255,0.55);
+            color: var(--gallery-secondary);
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
         }
         .dynasty-pill:hover {
-            border-color: rgba(255,255,255,0.4);
+            border-color: var(--gallery-secondary);
             color: rgba(255,255,255,0.85);
         }
         .dynasty-pill.active {
             background: rgba(255,255,255,0.08);
             border-color: rgba(255,255,255,0.5);
-            color: #e8e4dd;
+            color: var(--gallery-text);
         }
 
         /* Grid */
@@ -88,7 +88,7 @@
 
         /* Cards */
         .artwork-card {
-            background: #15152a;
+            background: var(--gallery-card);
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
@@ -117,7 +117,7 @@
             width: 100%;
             padding-top: 66.67%; /* 3:2 */
             overflow: hidden;
-            background: #0d0d1a;
+            background: var(--gallery-bg);
         }
         .artwork-image img {
             position: absolute;
@@ -136,7 +136,7 @@
         }
         .artwork-title {
             font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
-            color: #e8e4dd;
+            color: var(--gallery-text);
             font-size: 1.1rem;
             font-weight: 400;
             line-height: 1.5;
@@ -146,7 +146,7 @@
             display: inline-block;
             font-family: 'Lora', serif;
             font-size: 0.72rem;
-            color: rgba(255,255,255,0.45);
+            color: var(--gallery-secondary);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 3px;
             padding: 2px 10px;
@@ -156,7 +156,7 @@
         .artwork-brief {
             font-family: 'Lora', 'Noto Serif SC', serif;
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.4);
+            color: var(--gallery-secondary);
             line-height: 1.6;
         }
 

@@ -517,10 +517,10 @@
 
             if (step.type === 'photos') {
                 html += '<p class="wf-label">' + step.label + '</p>';
-                if (wfPhotos.length > 0 && currentWorkflow === 'add') {
-                    html += '<div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9rem;color:#c9a84c;">✅ 已自动载入研究时上传的 ' + wfPhotos.length + ' 张照片。您也可以重新选择。</div>';
+                if (wfPhotos.length > 0 && currentWorkflow === 'add' && wfData._existingImageIds) {
+                    html += '<div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9rem;color:#c9a84c;">✅ 已自动载入研究时上传的 ' + wfPhotos.length + ' 张照片 <button onclick="wfResetPhotos()" style="margin-left:8px;padding:4px 12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#e8ecf4;font-size:0.85rem;cursor:pointer;">🔄 重新选择</button></div>';
                 }
-                html += '<div class="wf-photo-area" onclick="wfPickPhotos()"><div class="icon">📷</div><p>' + (wfPhotos.length > 0 ? '点击重新选择照片' : '点击选择照片<br>支持多张') + '</p></div>';
+                html += '<div class="wf-photo-area" onclick="wfPickPhotos()"><div class="icon">📷</div><p>' + (wfPhotos.length > 0 ? '点击添加更多照片' : '点击选择照片<br>支持多张') + '</p></div>';
                 html += '<div class="wf-thumbs" id="wf-thumbs">';
                 wfPhotos.forEach(function(p, i) {
                     html += '<div class="wf-thumb"><img src="' + p.dataUrl + '" onclick="openLightbox(\'' + p.dataUrl.replace(/'/g, "\\'") + '\')"><button class="remove" onclick="wfRemovePhoto(' + i + ')">×</button></div>';
@@ -608,6 +608,13 @@
 
         window.wfRemovePhoto = function(i) {
             wfPhotos.splice(i, 1);
+            if (wfPhotos.length === 0) delete wfData._existingImageIds;
+            renderStep();
+        };
+
+        window.wfResetPhotos = function() {
+            wfPhotos = [];
+            delete wfData._existingImageIds;
             renderStep();
         };
 

@@ -431,7 +431,7 @@
         var pollTimer = null;
         var lastTs = 0;
         var waitingForReply = false;
-        var currentMode = 'menu'; // 'menu', 'chat', 'workflow'
+        var currentMode = 'menu'; // 'menu', 'chat', 'workflow', 'tasks'
         var currentWorkflow = null; // 'research' or 'add'
         var wfStep = 0;
         var wfData = {};
@@ -439,6 +439,23 @@
         var lastResearchImageIds = []; // imageIds from most recent research submission
         var lastResearchDescription = ''; // description from most recent research
         var fileInputCallback = null;
+        var currentUser = { email: null, name: '用户' }; // populated from CF Access
+
+        // Detect user identity from Cloudflare Access
+        (function detectUser() {
+            fetch('/cdn-cgi/access/get-identity', { credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data && data.email) {
+                        currentUser.email = data.email;
+                        currentUser.name = data.name || data.email.split('@')[0];
+                        // Update header with user name
+                        var statusEl = document.querySelector('.chat-status');
+                        if (statusEl) statusEl.innerHTML = '<span class="dot"></span> ' + currentUser.name;
+                    }
+                })
+                .catch(function() { /* CF Access not available (local dev) — continue as before */ });
+        })();
 
         // Auto-enter is deferred to end of script (after all functions defined)
 
@@ -1076,17 +1093,9 @@
                 window.sendMessage();
             }
         });
-        // ========== TASK LIST (工作日志) ==========
-        var TASK_STORAGE_KEY = 'readgallery_tasks';
+        // ========== TASK LIST (工作日志) — API-backed, per-user ==========
         var taskFilter = 'all'; // 'all', 'active', 'done'
-
-        function loadTasks() {
-            try { return JSON.parse(localStorage.getItem(TASK_STORAGE_KEY)) || []; }
-            catch(e) { return []; }
-        }
-        function saveTasks(tasks) {
-            localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
-        }
+        var cachedTasks = []; // local cache, synced with server
 
         function taskEsc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
@@ -1099,12 +1108,25 @@
 
         window.openTaskList = function() {
             setMode('tasks');
-            renderTaskPanel();
+            // Show loading, then fetch from server
+            var panel = document.getElementById('task-panel');
+            panel.innerHTML = '<div class="wf-loading"><div class="spinner"></div><p>加载中...</p></div>';
+            fetch(API_BASE + '/chat/tasks', { headers: apiHeaders(), credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    cachedTasks = data.tasks || [];
+                    renderTaskPanel();
+                })
+                .catch(function() {
+                    // Fallback to localStorage if API unavailable
+                    try { cachedTasks = JSON.parse(localStorage.getItem('readgallery_tasks')) || []; } catch(e) { cachedTasks = []; }
+                    renderTaskPanel();
+                });
         };
 
         function renderTaskPanel() {
             var panel = document.getElementById('task-panel');
-            var tasks = loadTasks();
+            var tasks = cachedTasks;
             var active = tasks.filter(function(t) { return !t.done; });
             var done = tasks.filter(function(t) { return t.done; });
             var todayStr = new Date().toISOString().slice(0,10);
@@ -1148,7 +1170,6 @@
                 var emptyIcon = taskFilter === 'active' ? '✨' : '📝';
                 html += '<div class="task-empty"><div class="empty-icon">' + emptyIcon + '</div>' + emptyMsg + '</div>';
             } else {
-                // Show active first, then done (in "all" view)
                 var activeFiltered = filtered.filter(function(t) { return !t.done; });
                 var doneFiltered = filtered.filter(function(t) { return t.done; });
 
@@ -1164,7 +1185,6 @@
 
             panel.innerHTML = html;
 
-            // Focus input and bind Enter key
             var inp = document.getElementById('task-input');
             if (inp) {
                 inp.focus();
@@ -1192,43 +1212,68 @@
             var inp = document.getElementById('task-input');
             var text = inp ? inp.value.trim() : '';
             if (!text) { if (inp) inp.style.borderColor = '#e57373'; return; }
-            var tasks = loadTasks();
-            tasks.unshift({
-                id: Date.now().toString(),
-                text: text,
-                done: false,
-                createdAt: new Date().toISOString(),
-                doneAt: null
+            inp.value = '';
+            inp.disabled = true;
+
+            fetch(API_BASE + '/chat/tasks', {
+                method: 'POST',
+                headers: apiHeaders(),
+                credentials: 'same-origin',
+                body: JSON.stringify({ text: text })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.ok && data.task) {
+                    cachedTasks.unshift(data.task);
+                }
+                renderTaskPanel();
+            })
+            .catch(function() {
+                // Fallback: add locally
+                cachedTasks.unshift({ id: Date.now().toString(), text: text, done: false, createdAt: new Date().toISOString(), doneAt: null });
+                renderTaskPanel();
             });
-            saveTasks(tasks);
-            renderTaskPanel();
         };
 
         window.toggleTask = function(id) {
-            var tasks = loadTasks();
-            var task = tasks.find(function(t) { return t.id === id; });
+            var task = cachedTasks.find(function(t) { return t.id === id; });
             if (!task) return;
-            task.done = !task.done;
-            task.doneAt = task.done ? new Date().toISOString() : null;
-            saveTasks(tasks);
-            // Quick animation before re-render
+            var newDone = !task.done;
+
+            // Optimistic update
+            task.done = newDone;
+            task.doneAt = newDone ? new Date().toISOString() : null;
+
             var el = document.getElementById('task-' + id);
-            if (el && task.done) {
+            if (el && newDone) {
                 el.classList.add('just-done');
                 setTimeout(function() { renderTaskPanel(); }, 400);
             } else {
                 renderTaskPanel();
             }
+
+            // Sync to server
+            fetch(API_BASE + '/chat/tasks/' + id, {
+                method: 'PUT',
+                headers: apiHeaders(),
+                credentials: 'same-origin',
+                body: JSON.stringify({ done: newDone })
+            }).catch(function() { /* silent — optimistic update already applied */ });
         };
 
         window.deleteTask = function(id) {
-            var tasks = loadTasks();
-            var task = tasks.find(function(t) { return t.id === id; });
+            var task = cachedTasks.find(function(t) { return t.id === id; });
             if (!task) return;
             if (!confirm('删除这个任务？\n\n' + task.text)) return;
-            tasks = tasks.filter(function(t) { return t.id !== id; });
-            saveTasks(tasks);
+
+            cachedTasks = cachedTasks.filter(function(t) { return t.id !== id; });
             renderTaskPanel();
+
+            fetch(API_BASE + '/chat/tasks/' + id, {
+                method: 'DELETE',
+                headers: apiHeaders(),
+                credentials: 'same-origin'
+            }).catch(function() { /* silent */ });
         };
 
         window.setTaskFilter = function(f) {

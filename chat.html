@@ -332,6 +332,8 @@
         var wfStep = 0;
         var wfData = {};
         var wfPhotos = []; // array of {dataUrl, blob}
+        var lastResearchImageIds = []; // imageIds from most recent research submission
+        var lastResearchDescription = ''; // description from most recent research
         var fileInputCallback = null;
 
         // Auto-enter is deferred to end of script (after all functions defined)
@@ -460,6 +462,33 @@
                 wfStep = 0;
                 wfData = {};
                 wfPhotos = [];
+
+                // For add_piece: pre-populate from last research submission
+                if (type === 'add') {
+                    var savedPhotos = null;
+                    var savedIds = null;
+                    var savedDesc = '';
+                    try { savedPhotos = JSON.parse(localStorage.getItem('lastResearchPhotos')); } catch(e) {}
+                    try { savedIds = JSON.parse(localStorage.getItem('lastResearchImageIds')); } catch(e) {}
+                    try { savedDesc = localStorage.getItem('lastResearchDescription') || ''; } catch(e) {}
+
+                    if (savedPhotos && savedPhotos.length > 0) {
+                        // Convert saved dataUrls back to photo objects (no blob needed - we have imageIds)
+                        wfPhotos = savedPhotos.map(function(dataUrl) {
+                            return { dataUrl: dataUrl, blob: null };
+                        });
+                        // Pre-fill description from research
+                        if (savedDesc) {
+                            wfData.description = savedDesc;
+                            // Try to extract name from description (first line or whole thing)
+                            var firstLine = savedDesc.split('\n')[0].trim();
+                            if (firstLine.length < 30) wfData.name = firstLine;
+                        }
+                        // Store the already-uploaded imageIds so we don't re-upload
+                        wfData._existingImageIds = savedIds;
+                    }
+                }
+
                 setMode('workflow');
                 renderStep();
             } catch(e) {
@@ -488,7 +517,10 @@
 
             if (step.type === 'photos') {
                 html += '<p class="wf-label">' + step.label + '</p>';
-                html += '<div class="wf-photo-area" onclick="wfPickPhotos()"><div class="icon">📷</div><p>点击选择照片<br>支持多张</p></div>';
+                if (wfPhotos.length > 0 && currentWorkflow === 'add') {
+                    html += '<div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9rem;color:#c9a84c;">✅ 已自动载入研究时上传的 ' + wfPhotos.length + ' 张照片。您也可以重新选择。</div>';
+                }
+                html += '<div class="wf-photo-area" onclick="wfPickPhotos()"><div class="icon">📷</div><p>' + (wfPhotos.length > 0 ? '点击重新选择照片' : '点击选择照片<br>支持多张') + '</p></div>';
                 html += '<div class="wf-thumbs" id="wf-thumbs">';
                 wfPhotos.forEach(function(p, i) {
                     html += '<div class="wf-thumb"><img src="' + p.dataUrl + '" onclick="openLightbox(\'' + p.dataUrl.replace(/'/g, "\\'") + '\')"><button class="remove" onclick="wfRemovePhoto(' + i + ')">×</button></div>';
@@ -602,8 +634,24 @@
             var btn = document.getElementById('wf-submit-btn');
             if (btn) { btn.disabled = true; btn.textContent = '提交中...'; }
 
-            // Upload photos first, then send action message
-            uploadPhotos(wfPhotos).then(function(imageIds) {
+            // Reuse existing imageIds if available (from research → add flow), else upload
+            var uploadPromise;
+            if (currentWorkflow === 'add' && wfData._existingImageIds && wfData._existingImageIds.length > 0 && wfPhotos.every(function(p) { return !p.blob; })) {
+                // Photos already uploaded during research — reuse imageIds
+                uploadPromise = Promise.resolve(wfData._existingImageIds);
+            } else {
+                uploadPromise = uploadPhotos(wfPhotos);
+            }
+            uploadPromise.then(function(imageIds) {
+                // Save research photos for reuse in add_piece workflow
+                if (currentWorkflow === 'research') {
+                    lastResearchImageIds = imageIds.slice();
+                    lastResearchDescription = wfData.description || '';
+                    // Also save photo dataUrls for display
+                    try { localStorage.setItem('lastResearchPhotos', JSON.stringify(wfPhotos.map(function(p) { return p.dataUrl; }))); } catch(e) {}
+                    try { localStorage.setItem('lastResearchImageIds', JSON.stringify(imageIds)); } catch(e) {}
+                    try { localStorage.setItem('lastResearchDescription', lastResearchDescription); } catch(e) {}
+                }
                 var payload = {
                     type: 'action',
                     action: currentWorkflow === 'research' ? 'research' : 'add_piece',

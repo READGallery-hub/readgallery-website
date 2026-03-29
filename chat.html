@@ -318,12 +318,12 @@
     <div id="lightbox" onclick="this.classList.remove('show')"><img id="lightbox-img"></div>
 
     <!-- Hidden file input -->
-    <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple style="display:none;">
 
     <script>
     (function() {
         var PASSWORD = 'readgallery2026';
-        var API_BASE = 'https://chat-worker.chengmu2010.workers.dev/api';
+        var API_BASE = '/api';
         var pollTimer = null;
         var lastTs = 0;
         var waitingForReply = false;
@@ -382,16 +382,31 @@
 
         // ========== FILE INPUT ==========
         var fileEl = document.getElementById('file-input');
-        fileEl.addEventListener('change', function() {
-            if (!fileEl.files.length || !fileInputCallback) return;
+
+        function handleFileSelection() {
+            if (!fileEl.files || !fileEl.files.length || !fileInputCallback) return;
             var files = Array.from(fileEl.files);
-            fileInputCallback(files);
+            // Filter out any zero-byte files (Android ghost selections)
+            files = files.filter(function(f) { return f.size > 0; });
+            if (files.length === 0) return;
+            var cb = fileInputCallback;
+            fileInputCallback = null;
             fileEl.value = '';
-        });
+            cb(files);
+        }
+
+        fileEl.addEventListener('change', handleFileSelection);
 
         function pickPhotos(cb) {
             fileInputCallback = cb;
-            fileEl.click();
+            // Reset the input completely to ensure Android re-triggers
+            var parent = fileEl.parentNode;
+            var newInput = fileEl.cloneNode(false);
+            parent.replaceChild(newInput, fileEl);
+            fileEl = newInput;
+            fileEl.addEventListener('change', handleFileSelection);
+            // Small delay for Android WebView compatibility
+            setTimeout(function() { fileEl.click(); }, 100);
         }
 
         function resizeImage(file, maxW, quality) {

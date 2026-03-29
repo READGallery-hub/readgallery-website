@@ -291,6 +291,10 @@
                 <span class="menu-icon">➕</span>
                 <span class="menu-label"><strong>添加新藏品</strong><span>将藏品添加到讀畫樓网站</span></span>
             </button>
+            <button class="menu-btn" onclick="startWorkflow('delete')">
+                <span class="menu-icon">🗑️</span>
+                <span class="menu-label"><strong>删除藏品</strong><span>从讀畫樓网站移除藏品</span></span>
+            </button>
             <button class="menu-btn" onclick="startFreeChat()">
                 <span class="menu-icon">💬</span>
                 <span class="menu-label"><strong>自由对话</strong><span>直接与助手对话</span></span>
@@ -460,6 +464,11 @@
             { id: 'preview', type: 'preview' },
             { id: 'confirm', type: 'submit', label: '确认添加到讀畫樓网站' }
         ];
+        var DELETE_STEPS = [
+            { id: 'name', label: '请输入要删除的藏品名称', type: 'text', placeholder: '例如：隋代四系贴花莲纹罐' },
+            { id: 'reason', label: '删除原因（选填）', type: 'textarea', placeholder: '例如：信息有误、已售出...' },
+            { id: 'confirm', type: 'submit', label: '⚠️ 确认删除此藏品' }
+        ];
 
         window.startWorkflow = function(type) {
             try {
@@ -503,7 +512,9 @@
         };
 
         function getSteps() {
-            return currentWorkflow === 'research' ? RESEARCH_STEPS : ADD_STEPS;
+            if (currentWorkflow === 'research') return RESEARCH_STEPS;
+            if (currentWorkflow === 'delete') return DELETE_STEPS;
+            return ADD_STEPS;
         }
 
         function renderStep() {
@@ -512,7 +523,7 @@
             var step = steps[wfStep];
             var totalVisible = steps.filter(function(s) { return s.type !== 'preview'; }).length;
             var currentVisible = steps.slice(0, wfStep + 1).filter(function(s) { return s.type !== 'preview'; }).length;
-            var title = currentWorkflow === 'research' ? '🔍 研究藏品' : '➕ 添加新藏品';
+            var title = currentWorkflow === 'research' ? '🔍 研究藏品' : currentWorkflow === 'delete' ? '🗑️ 删除藏品' : '➕ 添加新藏品';
 
             var html = '<div class="wf-header">' +
                 '<button class="wf-back" onclick="wfBack()">←</button>' +
@@ -556,6 +567,11 @@
                 html += '<p class="wf-label" style="text-align:center;font-size:1.1rem;">' + step.label + '？</p>';
                 if (currentWorkflow === 'research') {
                     html += renderResearchSummary();
+                } else if (currentWorkflow === 'delete') {
+                    html += '<div class="preview-card" style="border-color:rgba(229,115,115,0.4);"><h4 style="color:#e57373;">⚠️ 即将删除</h4>';
+                    if (wfData.name) html += '<div class="field"><label>藏品名称：</label><div class="val">' + esc(wfData.name) + '</div></div>';
+                    if (wfData.reason) html += '<div class="field"><label>删除原因：</label><div class="val">' + esc(wfData.reason) + '</div></div>';
+                    html += '<p style="color:#e57373;font-size:0.85rem;margin-top:12px;">此操作将从讀畫樓网站移除该藏品页面</p></div>';
                 } else {
                     html += renderPreview();
                 }
@@ -664,9 +680,10 @@
                     try { localStorage.setItem('lastResearchImageIds', JSON.stringify(imageIds)); } catch(e) {}
                     try { localStorage.setItem('lastResearchDescription', lastResearchDescription); } catch(e) {}
                 }
+                var actionMap = { research: 'research', add: 'add_piece', delete: 'delete_piece' };
                 var payload = {
                     type: 'action',
-                    action: currentWorkflow === 'research' ? 'research' : 'add_piece',
+                    action: actionMap[currentWorkflow] || currentWorkflow,
                     data: Object.assign({}, wfData, { imageIds: imageIds })
                 };
                 return fetch(API_BASE + '/chat', {
@@ -702,7 +719,7 @@
 
         function showSubmittedScreen() {
             var panel = document.getElementById('workflow-panel');
-            var msg = currentWorkflow === 'research' ? '✓ 研究请求已提交！' : '✓ 藏品信息已提交！';
+            var msg = currentWorkflow === 'research' ? '✓ 研究请求已提交！' : currentWorkflow === 'delete' ? '✓ 删除请求已提交！' : '✓ 藏品信息已提交！';
             panel.innerHTML = '<div class="wf-loading"><div class="spinner"></div><p>' + msg + '</p>' +
                 '<p style="margin-top:16px;font-size:0.85rem;color:#667799;">正在跳转到对话...</p></div>';
             setTimeout(function() { goToChatAfterSubmit(); }, 2000);

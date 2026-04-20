@@ -371,23 +371,31 @@
         <!-- Menu Panel -->
         <div class="menu-panel show" id="menu-panel">
             <h3>请选择功能</h3>
-            <button class="menu-btn" onclick="startWorkflow('research')">
+            <button class="menu-btn" onclick="startWorkflow('research')" id="menu-btn-research">
                 <span class="menu-icon">🔍</span>
                 <span class="menu-label"><strong>研究藏品</strong><span>上传照片，AI帮您鉴赏研究</span></span>
             </button>
-            <button class="menu-btn" onclick="startWorkflow('add')">
+            <button class="menu-btn" onclick="startWorkflow('add')" id="menu-btn-add">
                 <span class="menu-icon">➕</span>
                 <span class="menu-label"><strong>添加新藏品</strong><span>将藏品添加到讀畫樓网站</span></span>
             </button>
-            <button class="menu-btn" onclick="startWorkflow('delete')">
+            <button class="menu-btn" onclick="startWorkflow('social')" id="menu-btn-social">
+                <span class="menu-icon">📱</span>
+                <span class="menu-label"><strong>生成社交媒体内容</strong><span>为藏品创建小红书、微博等内容</span></span>
+            </button>
+            <button class="menu-btn" onclick="startWorkflow('delete')" id="menu-btn-delete">
                 <span class="menu-icon">🗑️</span>
                 <span class="menu-label"><strong>删除藏品</strong><span>从讀畫樓网站移除藏品</span></span>
             </button>
-            <button class="menu-btn" onclick="openTaskList()">
+            <button class="menu-btn" onclick="startWorkflow('approve')" id="menu-btn-approve" style="display:none;">
+                <span class="menu-icon">✅</span>
+                <span class="menu-label"><strong>审批公开展示</strong><span>批准藏品在网站公开展示</span></span>
+            </button>
+            <button class="menu-btn" onclick="openTaskList()" id="menu-btn-tasks">
                 <span class="menu-icon">📋</span>
                 <span class="menu-label"><strong>工作日志</strong><span>添加待办事项，记录完成进度</span></span>
             </button>
-            <button class="menu-btn" onclick="startFreeChat()">
+            <button class="menu-btn" onclick="startFreeChat()" id="menu-btn-chat">
                 <span class="menu-icon">💬</span>
                 <span class="menu-label"><strong>自由对话</strong><span>直接与助手对话</span></span>
             </button>
@@ -426,7 +434,6 @@
 
     <script>
     (function() {
-        var PASSWORD = 'readgallery2026';
         var API_BASE = '/api';
         var pollTimer = null;
         var lastTs = 0;
@@ -456,6 +463,35 @@
                 })
                 .catch(function() { /* CF Access not available (local dev) — continue as before */ });
         })();
+
+        // Detect user role from Worker
+        var currentRole = null;
+        (function detectRole() {
+            fetch(API_BASE + '/chat/me', { credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data && data.role) {
+                        currentRole = data.role;
+                        if (data.email) currentUser.email = data.email;
+                        if (data.name) currentUser.name = data.name;
+                        updateMenuForRole();
+                    }
+                })
+                .catch(function() {});
+        })();
+
+        function updateMenuForRole() {
+            var deleteBtn = document.getElementById('menu-btn-delete');
+            var approveBtn = document.getElementById('menu-btn-approve');
+            var statusEl = document.querySelector('.chat-status');
+            if (currentRole === 'staff' && deleteBtn) deleteBtn.style.display = 'none';
+            if (currentRole !== 'owner' && approveBtn) approveBtn.style.display = 'none';
+            if (currentRole === 'owner' && approveBtn) approveBtn.style.display = '';
+            if (statusEl && currentRole) {
+                var label = currentRole === 'owner' ? '管理员' : '工作人员';
+                statusEl.innerHTML = '<span class="dot"></span> ' + currentUser.name + ' · ' + label;
+            }
+        }
 
         // Auto-enter is deferred to end of script (after all functions defined)
 
@@ -582,9 +618,26 @@
             { id: 'reason', label: '删除原因（选填）', type: 'textarea', placeholder: '例如：信息有误、已售出...' },
             { id: 'confirm', type: 'submit', label: '⚠️ 确认删除此藏品' }
         ];
+        var SOCIAL_STEPS = [
+            { id: 'piece_id', label: '请输入藏品ID', type: 'text', placeholder: '例如：qing-dynasty-enamel-kundika-qing-001' },
+            { id: 'platform', label: '选择平台', type: 'select', options: ['xiaohongshu','weibo','douyin','taobao','weidian'] },
+            { id: 'style', label: '选择风格', type: 'select', options: ['professional','casual','luxury'] },
+            { id: 'confirm', type: 'submit', label: '📱 生成社交媒体内容' }
+        ];
+        var APPROVE_STEPS = [
+            { id: 'piece_id', label: '请输入要审批的藏品ID', type: 'text', placeholder: '例如：song-bowl-001' },
+            { id: 'confirm', type: 'submit', label: '✅ 批准公开展示' }
+        ];
 
         window.startWorkflow = function(type) {
             try {
+                // Role-gated workflows
+                if (type === 'delete' && currentRole && currentRole !== 'owner') {
+                    alert('此操作需要管理员权限'); return;
+                }
+                if (type === 'approve' && currentRole !== 'owner') {
+                    alert('此操作需要管理员权限'); return;
+                }
                 currentWorkflow = type;
                 wfStep = 0;
                 wfData = {};
@@ -627,6 +680,8 @@
         function getSteps() {
             if (currentWorkflow === 'research') return RESEARCH_STEPS;
             if (currentWorkflow === 'delete') return DELETE_STEPS;
+            if (currentWorkflow === 'social') return SOCIAL_STEPS;
+            if (currentWorkflow === 'approve') return APPROVE_STEPS;
             return ADD_STEPS;
         }
 
@@ -636,7 +691,7 @@
             var step = steps[wfStep];
             var totalVisible = steps.filter(function(s) { return s.type !== 'preview'; }).length;
             var currentVisible = steps.slice(0, wfStep + 1).filter(function(s) { return s.type !== 'preview'; }).length;
-            var title = currentWorkflow === 'research' ? '🔍 研究藏品' : currentWorkflow === 'delete' ? '🗑️ 删除藏品' : '➕ 添加新藏品';
+            var title = currentWorkflow === 'research' ? '🔍 研究藏品' : currentWorkflow === 'delete' ? '🗑️ 删除藏品' : currentWorkflow === 'social' ? '📱 社交媒体内容' : currentWorkflow === 'approve' ? '✅ 审批公开展示' : '➕ 添加新藏品';
 
             var html = '<div class="wf-header">' +
                 '<button class="wf-back" onclick="wfBack()">←</button>' +
@@ -793,7 +848,7 @@
                     try { localStorage.setItem('lastResearchImageIds', JSON.stringify(imageIds)); } catch(e) {}
                     try { localStorage.setItem('lastResearchDescription', lastResearchDescription); } catch(e) {}
                 }
-                var actionMap = { research: 'research', add: 'add_piece', delete: 'delete_piece' };
+                var actionMap = { research: 'research', add: 'add_piece', delete: 'delete_piece', social: 'generate_social_post', approve: 'approve_display' };
                 var payload = {
                     type: 'action',
                     action: actionMap[currentWorkflow] || currentWorkflow,
@@ -844,7 +899,7 @@
 
         // ========== CHAT (free chat mode) ==========
         function apiHeaders() {
-            return { 'Content-Type': 'application/json', 'X-Chat-Auth': PASSWORD };
+            return { 'Content-Type': 'application/json' };
         }
 
         function formatTime(ts) {
